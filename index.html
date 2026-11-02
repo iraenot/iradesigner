@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth}
+body{margin:0;background:oklch(0.985 0.008 80);color:oklch(0.27 0.03 285);font-family:'Bricolage Grotesque',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:oklch(0.27 0.03 285);text-decoration:none}
+a:hover{color:oklch(0.5 0.14 295)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes peekIn{from{opacity:0;transform:translateY(14px) rotate(2deg) scale(.9)}to{opacity:1;transform:rotate(-4deg)}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+</style>
+</helmet>
+
+<div style="position:relative;overflow:hidden;min-height:100vh">
+  <sc-if value="{{ hasZoom }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeZoom }}" style="position:fixed;inset:0;z-index:80;background:oklch(0.27 0.03 285 / .55);backdrop-filter:blur(8px);overflow:auto;display:flex;justify-content:center;align-items:flex-start;padding:84px 24px 40px;box-sizing:border-box;animation:fadeUp .25s ease both;cursor:zoom-out">
+      <div style="position:fixed;top:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:white;border-radius:999px;padding:6px;box-shadow:0 10px 30px oklch(0.3 0.05 285 / .2);z-index:81">
+        <button onClick="{{ zoomToA }}" style="all:unset;cursor:pointer;padding:8px 16px;border-radius:999px;font-weight:700;font-size:15px;background:{{ zoomABg }};color:{{ zoomAFg }}">A · Control</button>
+        <button onClick="{{ zoomToB }}" style="all:unset;cursor:pointer;padding:8px 16px;border-radius:999px;font-weight:700;font-size:15px;background:{{ zoomBBg }};color:{{ zoomBFg }}">B · Variant ★</button>
+        <button onClick="{{ closeZoom }}" aria-label="Close" style="all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;background:oklch(0.94 0.02 285);display:flex;align-items:center;justify-content:center;font-size:20px;transform:rotate(45deg)">+</button>
+      </div>
+      <img ref="{{ zoomRef }}" alt="{{ zoomAlt }}" onClick="{{ stop }}" style="display:block;width:100%;max-width:1280px;height:auto;border-radius:20px;border:6px solid white;box-shadow:0 30px 80px oklch(0.2 0.05 285 / .35);cursor:default">
+    </div>
+  </sc-if>
+  <canvas ref="{{ confettiRef }}" style="position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:60"></canvas>
+  <div ref="{{ cursorRef }}" style="position:fixed;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:oklch(0.8 0.11 295);mix-blend-mode:multiply;pointer-events:none;z-index:70;transition:width .2s,height .2s,margin .2s,opacity .2s;opacity:0"></div>
+
+  <div style="position:absolute;width:420px;height:420px;border-radius:50%;background:oklch(0.92 0.06 350);top:-120px;right:-100px;filter:blur(10px);animation:floaty 9s ease-in-out infinite"></div>
+  <div style="position:absolute;width:260px;height:260px;border-radius:50%;background:oklch(0.92 0.06 160);top:340px;left:-90px;animation:floaty 11s ease-in-out infinite"></div>
+  <div style="position:absolute;width:140px;height:140px;border-radius:50%;background:oklch(0.92 0.06 95);top:180px;right:28%;animation:floaty 7s ease-in-out infinite"></div>
+
+  <nav style="position:sticky;top:16px;z-index:40;max-width:1160px;margin:16px auto 0;padding:0 20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:oklch(1 0 0 / .8);backdrop-filter:blur(12px);border-radius:999px;padding:10px 12px 10px 22px;box-shadow:0 6px 24px oklch(0.3 0.05 285 / .08)">
+      <a href="#top" style="font-weight:800;font-size:18px;letter-spacing:-.02em">Iryna L.</a>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">
+        <a href="#work" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 295)">Work</a>
+        <a href="#about" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 350)">About</a>
+        <a href="#process" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 160)">Process</a>
+        <a href="#tools" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 95)">Tools</a>
+      </div>
+    </div>
+  </nav>
+
+  <header id="top" style="position:relative;max-width:1160px;margin:0 auto;padding:100px 20px 90px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:40px;align-items:center">
+    <div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:28px">
+      <span style="display:inline-block;background:oklch(0.92 0.06 230);padding:7px 14px;border-radius:12px;font-weight:700;font-size:14px;transform:rotate(-3deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);border:2px solid white">A/B tests</span>
+      <span style="display:inline-block;background:oklch(0.92 0.06 95);padding:7px 14px;border-radius:12px;font-weight:700;font-size:14px;transform:rotate(2deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);border:2px solid white">Section optimization</span>
+      <span style="display:inline-block;background:oklch(0.92 0.06 350);padding:7px 14px;border-radius:12px;font-weight:700;font-size:14px;transform:rotate(-1deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);border:2px solid white">UX / UI</span>
+    </div>
+    <h1 style="margin:0;font-size:clamp(52px,8vw,100px);line-height:.92;letter-spacing:-.045em;font-weight:800">Iryna<br>Liebieideva</h1>
+    <p style="margin:32px 0 0;max-width:560px;font-size:clamp(19px,2vw,23px);line-height:1.45;text-wrap:pretty;color:oklch(0.42 0.03 285)">UX/UI designer running small experiments that move numbers. A/B tests, section redesigns and conversion tweaks, each with the data behind it.</p>
+    <a href="#work" style="display:inline-flex;align-items:center;gap:10px;margin-top:36px;background:oklch(0.27 0.03 285);color:white;padding:16px 26px;border-radius:999px;font-weight:700;font-size:17px;transition:transform .2s" style-hover="transform:rotate(-2deg) scale(1.04);color:white">See the experiments <span style="display:inline-flex;width:24px;height:24px;border-radius:50%;background:oklch(0.92 0.06 160);color:oklch(0.27 0.03 285);align-items:center;justify-content:center;font-size:14px">↓</span></a>
+      </div>
+    <div aria-hidden="true" style="position:relative;height:520px;max-width:520px;width:100%;justify-self:center">
+      <div style="position:absolute;left:0;top:30px;width:260px;background:white;border-radius:24px;padding:16px;box-shadow:0 14px 34px oklch(0.3 0.05 285 / .1);transform:rotate(-7deg);animation:floaty 8s ease-in-out infinite">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><span style="width:30px;height:30px;border-radius:50%;background:oklch(0.93 0.01 285);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">A</span><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.5 0.03 285)">control</span></div>
+        <div style="height:12px;width:80%;border-radius:6px;background:oklch(0.9 0.01 285);margin-bottom:8px"></div>
+        <div style="height:12px;width:55%;border-radius:6px;background:oklch(0.9 0.01 285);margin-bottom:16px"></div>
+        <div style="height:90px;border-radius:14px;background:repeating-linear-gradient(135deg,oklch(0.95 0.01 285) 0 8px,oklch(0.975 0.005 285) 8px 16px);margin-bottom:14px"></div>
+        <div style="height:34px;width:110px;border-radius:10px;background:oklch(0.88 0.01 285)"></div>
+      </div>
+      <div style="position:absolute;right:0;top:110px;width:290px;background:oklch(0.92 0.06 295);border-radius:26px;padding:18px;border:3px solid white;box-shadow:0 22px 50px oklch(0.3 0.05 285 / .16);transform:rotate(5deg);animation:floaty 10s ease-in-out infinite">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><span style="width:30px;height:30px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px">B</span><span style="background:oklch(0.27 0.03 285);color:white;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700">winner ★</span></div>
+        <div style="height:14px;width:85%;border-radius:7px;background:white;margin-bottom:8px"></div>
+        <div style="height:12px;width:60%;border-radius:6px;background:oklch(1 0 0 / .6);margin-bottom:16px"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px"><div style="height:56px;border-radius:12px;background:oklch(0.96 0.03 295)"></div><div style="height:56px;border-radius:12px;background:oklch(0.96 0.03 295)"></div><div style="height:56px;border-radius:12px;background:oklch(0.96 0.03 295)"></div></div>
+        <div style="position:relative;height:42px;width:160px;border-radius:999px;background:oklch(0.27 0.03 285);color:white;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px">Get started →
+          <svg width="30" height="34" viewBox="0 0 30 34" style="position:absolute;right:-18px;bottom:-24px;filter:drop-shadow(0 3px 4px oklch(0.3 0.05 285 / .25))"><path d="M3 2 L3 26 L9.5 20 L14 31 L19 29 L14.5 18 L23 18 Z" fill="white" stroke="oklch(0.27 0.03 285)" stroke-width="2" stroke-linejoin="round"></path></svg>
+        </div>
+      </div>
+      <span style="position:absolute;right:28px;top:62px;background:oklch(0.92 0.06 350);padding:10px 16px;border-radius:14px;border:2px solid white;font-weight:800;font-size:26px;letter-spacing:-.03em;transform:rotate(-8deg);box-shadow:0 4px 0 oklch(0.3 0.05 285 / .12);z-index:2">+24% <span style="font-size:14px;font-weight:700">CR</span></span>
+      <div style="position:absolute;left:30px;bottom:20px;width:220px;background:white;border-radius:22px;padding:16px 18px;box-shadow:0 14px 34px oklch(0.3 0.05 285 / .1);transform:rotate(-2deg);animation:floaty 9s ease-in-out infinite;z-index:1">
+        <div style="font-size:13px;font-weight:700;margin-bottom:12px">Conversion rate</div>
+        <div style="display:flex;align-items:flex-end;gap:14px;height:90px">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;height:52px;border-radius:10px 10px 4px 4px;background:oklch(0.9 0.01 285)"></div><span style="font-family:'JetBrains Mono',monospace;font-size:11px">A · 2.1%</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px"><div style="width:100%;height:72px;border-radius:10px 10px 4px 4px;background:oklch(0.8 0.11 160)"></div><span style="font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500">B · 2.6%</span></div>
+        </div>
+      </div>
+      <span style="position:absolute;left:240px;bottom:60px;z-index:2;background:oklch(0.92 0.06 95);padding:7px 13px;border-radius:12px;border:2px solid white;font-weight:700;font-size:14px;transform:rotate(6deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">p &lt; 0.05 ✓</span>
+      <span style="position:absolute;left:210px;top:6px;width:14px;height:14px;border-radius:50%;background:oklch(0.85 0.1 95)"></span>
+      <span style="position:absolute;left:46%;top:96px;width:10px;height:10px;border-radius:3px;background:oklch(0.82 0.1 350);transform:rotate(30deg)"></span>
+      <span style="position:absolute;right:10px;bottom:120px;width:16px;height:16px;border-radius:50%;background:oklch(0.85 0.09 230)"></span>
+      <span style="position:absolute;left:8px;top:300px;width:12px;height:12px;border-radius:3px;background:oklch(0.85 0.1 160);transform:rotate(-20deg)"></span>
+    </div>
+  </header>
+
+  <section id="work" style="position:relative;max-width:1160px;margin:0 auto;padding:40px 20px 80px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px">
+      <h2 style="margin:0;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">Experiments</h2>
+      <p style="margin:0;font-size:16px;color:oklch(0.48 0.03 285)">6 cases · click one to open</p>
+    </div>
+    
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <sc-for list="{{ cases }}" as="c" hint-placeholder-count="6">
+        <article id="case-{{ $index }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ c.leave }}" style="position:relative;z-index:{{ c.z }};background:{{ c.bg }};border-radius:32px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 2px 0 oklch(0.3 0.05 285 / .06)" style-hover="transform:{{ c.hoverTf }};box-shadow:0 14px 34px oklch(0.3 0.05 285 / .1)">
+          <button onClick="{{ c.toggle }}" style="all:unset;box-sizing:border-box;width:100%;position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:20px;padding:24px 26px;cursor:pointer">
+            <span style="width:54px;height:54px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500">{{ c.n }}</span>
+            <span style="display:flex;flex-direction:column;gap:10px;min-width:0">
+              <span style="font-size:clamp(21px,2.6vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.1">{{ c.title }}</span>
+              <span style="display:flex;gap:8px;flex-wrap:wrap">
+                <span style="background:white;padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(-2deg);box-shadow:0 2px 0 oklch(0.3 0.05 285 / .1)">{{ c.type }}</span>
+                <span style="background:oklch(1 0 0 / .55);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:500;transform:rotate(1.5deg)">{{ c.area }}</span>
+              </span>
+            </span>
+            <span style="display:flex;align-items:center;gap:16px">
+              <span style="text-align:right;display:flex;flex-direction:column">
+                <span style="font-size:clamp(22px,3vw,34px);font-weight:800;letter-spacing:-.03em;color:{{ c.deep }}">{{ c.headline }}</span>
+                <span style="font-size:13px;color:oklch(0.42 0.03 285)">{{ c.headlineLabel }}</span>
+              </span>
+              <span style="width:46px;height:46px;border-radius:50%;background:oklch(0.27 0.03 285);color:white;display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .3s;transform:{{ c.chevTf }}">+</span>
+            </span>
+            <sc-if value="{{ c.showPeek }}" hint-placeholder-val="{{ false }}">
+              <span style="position:absolute;right:210px;top:50%;width:310px;margin-top:-105px;box-sizing:border-box;padding:12px;border-radius:26px;background-color:{{ c.bgSoft }};background-image:radial-gradient({{ c.bg }} 2.5px,transparent 3px),radial-gradient({{ c.bg }} 2.5px,transparent 3px);background-size:16px 16px;background-position:0 0,8px 8px;border:2px solid white;transform:rotate(-4deg);box-shadow:0 22px 44px oklch(0.3 0.05 285 / .16);pointer-events:none;animation:peekIn .3s cubic-bezier(.34,1.56,.64,1) both">
+                <span style="display:block;aspect-ratio:16/10;border-radius:16px;border:3px solid white;background:white url({{ c.peekImg }}) top center/cover no-repeat;box-shadow:0 4px 12px oklch(0.3 0.05 285 / .1)"></span>
+                <span style="position:absolute;top:-12px;right:22px;background:white;padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(6deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">B ★</span>
+              </span>
+            </sc-if>
+          </button>
+
+          <sc-if value="{{ c.isOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:6px 26px 30px;animation:fadeUp .5s ease both;display:flex;flex-direction:column;gap:18px">
+              <p style="margin:0;max-width:760px;font-size:19px;line-height:1.5;text-wrap:pretty">{{ c.intro }}</p>
+
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+                <div style="background:white;border-radius:24px;padding:24px">
+                  <div style="display:inline-block;background:oklch(0.92 0.06 350);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(-2deg);margin-bottom:14px">The challenge</div>
+                  <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ c.challenge }}</p>
+                </div>
+                <div style="background:white;border-radius:24px;padding:24px">
+                  <div style="display:inline-block;background:oklch(0.92 0.06 160);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(2deg);margin-bottom:14px">The approach</div>
+                  <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ c.approach }}</p>
+                </div>
+              </div>
+
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+                <figure style="margin:0;background:white;border-radius:24px;padding:14px">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px;gap:8px">
+                    <span style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px"><span style="width:30px;height:30px;border-radius:50%;background:oklch(0.93 0.01 285);display:flex;align-items:center;justify-content:center;font-weight:800">A</span>Control · before</span>
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.48 0.03 285)">{{ c.aRate }}</span>
+                  </div>
+                  <sc-if value="{{ c.aImg }}" hint-placeholder-val="{{ false }}">
+                    <img ref="{{ c.aRef }}" alt="Variant A screenshot" onClick="{{ c.zoomA }}" style="cursor:zoom-in;display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
+                  </sc-if>
+                  <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
+                  <div style="aspect-ratio:4/3;border-radius:16px;background:repeating-linear-gradient(135deg,oklch(0.95 0.01 285) 0 10px,oklch(0.975 0.005 285) 10px 20px);display:flex;align-items:center;justify-content:center">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.5 0.03 285);background:white;padding:6px 10px;border-radius:8px">screenshot · variant A</span>
+                  </div>
+                  </sc-if>
+                </figure>
+                <figure id="win-{{ $index }}" style="margin:0;background:white;border-radius:24px;padding:14px;box-shadow:0 0 0 3px {{ c.deep }}">
+                  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px;gap:8px">
+                    <span style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px"><span style="width:30px;height:30px;border-radius:50%;background:{{ c.bg }};display:flex;align-items:center;justify-content:center;font-weight:800">B</span>Variant · after</span>
+                    <button onClick="{{ c.celebrate }}" style="all:unset;cursor:pointer;background:oklch(0.27 0.03 285);color:white;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;transform:rotate(3deg);transition:transform .25s" style-hover="transform:rotate(-4deg) scale(1.08)">Winner ★ {{ c.bRate }}</button>
+                  </div>
+                  <sc-if value="{{ c.bImg }}" hint-placeholder-val="{{ false }}">
+                    <img ref="{{ c.bRef }}" alt="Variant B screenshot" onClick="{{ c.zoomB }}" style="cursor:zoom-in;display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
+                  </sc-if>
+                  <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
+                  <div style="aspect-ratio:4/3;border-radius:16px;background:repeating-linear-gradient(135deg,{{ c.bg }} 0 10px,{{ c.bgSoft }} 10px 20px);display:flex;align-items:center;justify-content:center">
+                    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.42 0.03 285);background:white;padding:6px 10px;border-radius:8px">screenshot · variant B</span>
+                  </div>
+                  </sc-if>
+                </figure>
+              </div>
+
+              <div style="background:oklch(0.27 0.03 285);color:white;border-radius:28px;padding:26px">
+                <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px">
+                  <span style="font-weight:700;font-size:18px">Results</span>
+                  <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.82 0.02 285)">{{ c.meta }}</span>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px">
+                  <sc-for list="{{ c.metrics }}" as="m" hint-placeholder-count="4">
+                    <div style="background:oklch(1 0 0 / .07);border-radius:20px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:6px">
+                      <span style="font-size:14px;color:oklch(0.85 0.02 285)">{{ m.label }}</span>
+                      <span style="font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1;color:{{ m.color }};font-variant-numeric:tabular-nums">{{ m.delta }}</span>
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.8 0.02 285);font-variant-numeric:tabular-nums">{{ m.range }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </article>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="about" style="max-width:1160px;margin:0 auto;padding:60px 20px">
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center">
+      <div style="position:relative;aspect-ratio:1;max-width:420px;border-radius:50%;background:repeating-linear-gradient(135deg,oklch(0.92 0.06 350) 0 12px,oklch(0.95 0.04 350) 12px 24px);display:flex;align-items:center;justify-content:center">
+        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;background:white;padding:6px 10px;border-radius:8px">portrait photo</span>
+        <span style="position:absolute;bottom:12%;right:-4%;background:oklch(0.92 0.06 95);padding:8px 14px;border-radius:12px;font-weight:700;font-size:15px;transform:rotate(-6deg);border:2px solid white;box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">Hi, I'm Iryna</span>
+      </div>
+      <div>
+        <h2 style="margin:0 0 20px;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">About</h2>
+        <p style="margin:0 0 16px;font-size:19px;line-height:1.55;text-wrap:pretty">[About paragraph] A short intro on background, years of experience and the kind of products you've worked on.</p>
+        <p style="margin:0;font-size:17px;line-height:1.55;color:oklch(0.45 0.03 285);text-wrap:pretty">[Second paragraph] What you enjoy about testing and optimization, and the teams you've worked with.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="process" style="max-width:1160px;margin:0 auto;padding:60px 20px">
+    <h2 style="margin:0 0 28px;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">Process</h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <div style="background:{{ s.bg }};border-radius:28px;padding:26px;min-height:200px;display:flex;flex-direction:column;gap:12px;transition:transform .35s cubic-bezier(.34,1.56,.64,1)" style-hover="transform:{{ s.hoverTf }}">
+          <span style="width:44px;height:44px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:14px">{{ s.n }}</span>
+          <span style="font-size:24px;font-weight:700;letter-spacing:-.02em;margin-top:auto">{{ s.title }}</span>
+          <span style="font-size:15px;line-height:1.5;color:oklch(0.38 0.03 285)">{{ s.text }}</span>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <section id="tools" style="max-width:1160px;margin:0 auto;padding:60px 20px 120px">
+    <h2 style="margin:0 0 28px;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">Tools &amp; skills</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:12px">
+      <sc-for list="{{ tools }}" as="t" hint-placeholder-count="12">
+        <span style="background:{{ t.bg }};padding:12px 20px;border-radius:16px;font-size:18px;font-weight:700;border:2px solid white;box-shadow:0 3px 0 oklch(0.3 0.05 285 / .1);transform:rotate({{ t.rot }});transition:transform .3s cubic-bezier(.34,1.56,.64,1)" style-hover="transform:rotate(0deg) scale(1.1)">{{ t.name }}</span>
+      </sc-for>
+    </div>
+  </section>
+
+  <footer style="max-width:1160px;margin:0 auto;padding:30px 20px 40px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:oklch(0.5 0.03 285);border-top:2px dashed oklch(0.9 0.02 285)">
+    <span>© 2026 Iryna Liebieideva</span>
+    <a href="#top">Back to top ↑</a>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;customCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;confetti&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;wobble&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
+const HUES = [350, 60, 95, 160, 230, 295];
+const CASES = [
+  { title: 'Pricing page CTA', type: 'A/B test', area: 'Pricing', headlineIdx: 0,
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '2 weeks · 18,400 visitors · 95% confidence',
+    metrics: [['Conversion rate', 2.1, 2.6, '%', 1], ['CTR', 4.8, 6.1, '%', 1], ['Time on page', 48, 57, 's', 0], ['AOV', 42, 45, '$', 0]] },
+  { title: 'Checkout trust signals', type: 'A/B test', area: 'Checkout', headlineIdx: 0,
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '3 weeks · 9,200 sessions · 97% confidence',
+    metrics: [['Conversion rate', 54.0, 61.2, '%', 1], ['CTR', 22.0, 24.5, '%', 1], ['Time on page', 95, 88, 's', 0], ['AOV', 63, 66, '$', 0]] },
+  { title: 'Product page hero', type: 'Section redesign', area: 'Product page', headlineIdx: 1,
+    aImg: 'assets/product-page-before.png', bImg: 'assets/product-page-after.png',
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '2 weeks · 31,000 visitors · 99% confidence',
+    metrics: [['Conversion rate', 3.4, 3.9, '%', 1], ['CTR', 11.2, 15.0, '%', 1], ['Time on page', 62, 74, 's', 0], ['AOV', 58, 58, '$', 0]] },
+  { title: 'Demo form step cut', type: 'A/B test', area: 'Lead form', headlineIdx: 0,
+    aImg: 'assets/demo-form-before.png', bImg: 'assets/demo-form-after.png',
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '4 weeks · 6,700 sign-ups · 95% confidence',
+    metrics: [['Conversion rate', 38.0, 47.5, '%', 1], ['CTR', 61.0, 66.0, '%', 1], ['Time on page', 140, 102, 's', 0], ['AOV', 0, 0, '$', 0]] },
+  { title: 'Landing page social proof', type: 'Section redesign', area: 'Landing', headlineIdx: 2,
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '2 weeks · 22,800 visitors · 96% confidence',
+    metrics: [['Conversion rate', 1.8, 2.1, '%', 1], ['CTR', 7.4, 8.2, '%', 1], ['Time on page', 41, 63, 's', 0], ['AOV', 0, 0, '$', 0]] },
+  { title: 'Cart upsell module', type: 'A/B test', area: 'Cart', headlineIdx: 3,
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '3 weeks · 14,100 carts · 98% confidence',
+    metrics: [['Conversion rate', 12.0, 12.4, '%', 1], ['CTR', 3.1, 9.6, '%', 1], ['Time on page', 35, 39, 's', 0], ['AOV', 48, 56, '$', 0]] },
+];
+const STEPS = [
+  ['Audit', '[Short description] Analytics, heatmaps and recordings to find where users struggle.'],
+  ['Hypothesis', '[Short description] One clear change, one expected outcome, one primary metric.'],
+  ['Design & test', '[Short description] Build the variant, split traffic, run to significance.'],
+  ['Learn & ship', '[Short description] Roll out the winner and document what it taught us.'],
+];
+const TOOLS = ['Figma', 'FigJam', 'Google Analytics 4', 'Hotjar', 'Optimizely', 'VWO', 'Maze', 'Looker Studio', 'Webflow', 'Usability testing', 'Information architecture', 'Prototyping'];
+
+const PH = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250"><rect width="400" height="250" fill="#f3f0f7"/><text x="200" y="130" font-family="monospace" font-size="14" fill="#8a8494" text-anchor="middle">screenshot · variant B</text></svg>');
+const fmt = (v, unit, d) => unit === '$' ? '$' + v.toFixed(d) : v.toFixed(d) + unit;
+
+class Component extends DCLogic {
+  state = { open: null, p: 1, cols: 4, hover: null, zoom: null };
+  confettiRef = React.createRef();
+  cursorRef = React.createRef();
+  parts = [];
+
+  componentDidMount() {
+    const c = this.confettiRef.current;
+    const size = () => {
+      const r = devicePixelRatio || 1; c.width = innerWidth * r; c.height = innerHeight * r; c.getContext('2d').setTransform(r, 0, 0, r, 0, 0);
+      const w = Math.min(innerWidth, 1160) - 40, cols = w < 600 ? 1 : w < 900 ? 2 : 4;
+      if (cols !== this.state.cols) this.setState({ cols });
+    };
+    size(); addEventListener('resize', size); this._size = size;
+    this._move = e => {
+      const el = this.cursorRef.current; if (!el || this.props.customCursor === false) return;
+      el.style.opacity = 1;
+      el.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+      const big = e.target.closest && e.target.closest('button,a');
+      el.style.width = el.style.height = big ? '56px' : '26px';
+      el.style.margin = big ? '-28px 0 0 -28px' : '-13px 0 0 -13px';
+    };
+    addEventListener('mousemove', this._move);
+    addEventListener('keydown', this._esc);
+    this._style = document.createElement('style');
+    document.head.appendChild(this._style);
+    this.syncCursor();
+  }
+  componentDidUpdate() { this.syncCursor(); }
+  srcRef(src) { return el => { if (el && src && el.getAttribute('src') !== src) el.setAttribute('src', src); }; }
+  _esc = e => { if (e.key === 'Escape' && this.state.zoom) this.setState({ zoom: null }); };
+  componentWillUnmount() {
+    removeEventListener('keydown', this._esc);
+    removeEventListener('resize', this._size); removeEventListener('mousemove', this._move);
+    this._style && this._style.remove(); cancelAnimationFrame(this._raf); cancelAnimationFrame(this._craf);
+  }
+  syncCursor() {
+    const on = this.props.customCursor !== false;
+    if (this._style) this._style.textContent = on ? '*{cursor:none!important}' : '';
+    if (!on && this.cursorRef.current) this.cursorRef.current.style.opacity = 0;
+  }
+
+  confetti(x, y) {
+    if (this.props.confetti === false) return;
+    const cols = HUES.map(h => `oklch(0.78 0.14 ${h})`);
+    for (let i = 0; i < 90; i++) {
+      const a = Math.random() * Math.PI * 2, s = 4 + Math.random() * 7;
+      this.parts.push({ x, y, vx: Math.cos(a) * s, vy: Math.sin(a) * s - 5, r: 4 + Math.random() * 5, c: cols[i % cols.length], life: 1, round: Math.random() > .5, rot: Math.random() * 6 });
+    }
+    if (!this._craf) this.tick();
+  }
+  tick = () => {
+    const ctx = this.confettiRef.current.getContext('2d');
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    this.parts = this.parts.filter(p => p.life > 0);
+    for (const p of this.parts) {
+      p.vy += .25; p.vx *= .985; p.x += p.vx; p.y += p.vy; p.life -= .012; p.rot += .1;
+      ctx.globalAlpha = Math.max(0, p.life); ctx.fillStyle = p.c;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      if (p.round) { ctx.beginPath(); ctx.arc(0, 0, p.r / 1.4, 0, 7); ctx.fill(); } else ctx.fillRect(-p.r / 2, -p.r / 4, p.r, p.r / 2);
+      ctx.restore();
+    }
+    this._craf = this.parts.length ? requestAnimationFrame(this.tick) : null;
+  };
+  burstAt(i) {
+    const el = document.getElementById('win-' + i); if (!el) return;
+    const r = el.getBoundingClientRect();
+    this.confetti(r.left + r.width / 2, Math.max(80, r.top + 40));
+  }
+
+  toggle(i) {
+    if (this.state.open === i) return this.setState({ open: null });
+    this.setState({ open: i, p: 0 });
+    setTimeout(() => {
+      const el = document.getElementById('case-' + i);
+      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 96, behavior: 'smooth' });
+    }, 30);
+    cancelAnimationFrame(this._raf);
+    const start = performance.now() + 250, dur = 1300;
+    const step = t => {
+      const k = Math.min(1, Math.max(0, (t - start) / dur));
+      this.setState({ p: 1 - Math.pow(1 - k, 3) });
+      if (k < 1) this._raf = requestAnimationFrame(step);
+    };
+    this._raf = requestAnimationFrame(step);
+    setTimeout(() => this.burstAt(i), 900);
+  }
+
+  renderVals() {
+    const wobble = this.props.wobble !== false;
+    const { open, p, cols } = this.state;
+    const isTiles = false;
+    const SPANS = { 4: [[1,1],[1,1],[2,2],[1,2],[1,2],[2,1]], 2: [[1,1],[1,1],[2,2],[1,1],[1,1],[2,1]], 1: [[1,1],[1,1],[1,2],[1,1],[1,1],[1,1]] }[cols];
+    const cases = CASES.map((c, i) => {
+      const h = HUES[i], isOpen = open === i, prog = isOpen ? p : 1;
+      const metrics = c.metrics.filter(m => m[1] > 0).map(([label, a, b, unit, d]) => {
+        const delta = (b - a) / a * 100;
+        const lowerBetter = label === 'Time on page' && /Demo form|Checkout/.test(c.title);
+        const good = lowerBetter ? delta < 0 : delta >= 0;
+        return {
+          label, delta: (delta >= 0 ? '+' : '−') + Math.abs(delta * prog).toFixed(1) + '%',
+          range: `${fmt(a, unit, d)} → ${fmt(a + (b - a) * prog, unit, d)}`,
+          color: good ? `oklch(0.86 0.1 ${h})` : 'oklch(0.85 0.03 285)',
+        };
+      });
+      const [hl, a, b] = c.metrics[c.headlineIdx];
+      const hd = (b - a) / a * 100;
+      return {
+        ...c, n: String(i + 1).padStart(2, '0'), isOpen, metrics,
+        aImg: c.aImg || null, bImg: c.bImg || null, noImg: !c.aImg, isClosed: !isOpen,
+        peekImg: c.bImg || PH, showPeek: this.state.hover === i && !isOpen && cols > 1, z: this.state.hover === i ? 3 : 1,
+        aRef: this.srcRef(c.aImg), bRef: this.srcRef(c.bImg),
+        zoomA: () => this.setState({ zoom: { i, v: 'a' } }), zoomB: () => this.setState({ zoom: { i, v: 'b' } }),
+        enter: () => this.setState({ hover: i }), leave: () => this.setState({ hover: null }),
+        gc: isOpen ? '1 / -1' : `span ${SPANS[i][0]}`, gr: isOpen ? 'auto' : `span ${SPANS[i][1]}`,
+        showPreview: SPANS[i][0] > 1 || SPANS[i][1] > 1,
+        tileHoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 1.2 : -1.2}deg) scale(1.02)` : 'translateY(-4px)',
+        bg: `oklch(0.92 0.06 ${h})`, bgSoft: `oklch(0.96 0.03 ${h})`, deep: `oklch(0.5 0.13 ${h})`,
+        hoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 0.8 : -0.8}deg) scale(1.01)` : 'translateY(-3px)',
+        chevTf: isOpen ? 'rotate(45deg)' : 'none',
+        headline: (hd >= 0 ? '+' : '−') + Math.abs(hd).toFixed(0) + '%',
+        headlineLabel: hl.toLowerCase(),
+        aRate: fmt(c.metrics[0][1], '%', 1) + ' CR', bRate: fmt(c.metrics[0][2], '%', 1),
+        toggle: () => this.toggle(i),
+        celebrate: e => { e.stopPropagation(); this.confetti(e.clientX, e.clientY); },
+      };
+    });
+    const steps = STEPS.map(([title, text], i) => ({
+      title, text, n: String(i + 1).padStart(2, '0'), bg: `oklch(0.93 0.05 ${HUES[(i * 2 + 1) % 6]})`,
+      hoverTf: wobble ? `rotate(${i % 2 ? 2 : -2}deg) translateY(-4px)` : 'translateY(-4px)',
+    }));
+    const tools = TOOLS.map((name, i) => ({ name, bg: `oklch(0.92 0.06 ${HUES[i % 6]})`, rot: wobble ? `${[-3, 2, -1, 3, -2, 1][i % 6]}deg` : '0deg' }));
+    const z = this.state.zoom, zc = z && CASES[z.i];
+    const dark = 'oklch(0.27 0.03 285)';
+    const zoomVals = {
+      hasZoom: !!z, zoomRef: this.srcRef(zc ? (z.v === 'a' ? zc.aImg : zc.bImg) : null), zoomSrc: zc ? (z.v === 'a' ? zc.aImg : zc.bImg) : '', zoomAlt: z ? (z.v === 'a' ? 'Variant A' : 'Variant B') : '',
+      closeZoom: () => this.setState({ zoom: null }), stop: e => e.stopPropagation(),
+      zoomToA: e => { e.stopPropagation(); this.setState({ zoom: { ...z, v: 'a' } }); },
+      zoomToB: e => { e.stopPropagation(); this.setState({ zoom: { ...z, v: 'b' } }); },
+      zoomABg: z && z.v === 'a' ? dark : 'transparent', zoomAFg: z && z.v === 'a' ? 'white' : dark,
+      zoomBBg: z && z.v === 'b' ? dark : 'transparent', zoomBFg: z && z.v === 'b' ? 'white' : dark,
+    };
+    return { ...zoomVals, cases, steps, tools, isTiles, isList: !isTiles, cols, confettiRef: this.confettiRef, cursorRef: this.cursorRef };
+  }
+}
+</script>
+</body>
+</html>
