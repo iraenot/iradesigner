@@ -16,7 +16,7 @@ body{margin:0;background:oklch(0.985 0.008 80);color:oklch(0.27 0.03 285);font-f
 a{color:oklch(0.27 0.03 285);text-decoration:none}
 a:hover{color:oklch(0.5 0.14 295)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes peekIn{from{opacity:0;transform:translateY(14px) rotate(2deg) scale(.9)}to{opacity:1;transform:rotate(-4deg)}}
+@keyframes peekIn{from{opacity:0;clip-path:inset(50% 50% 50% 50% round 18px);transform:scale(.92) translateY(10px)}to{opacity:1;clip-path:inset(0 0 0 0 round 18px);transform:none}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 </style>
 </helmet>
@@ -103,8 +103,8 @@ a:hover{color:oklch(0.5 0.14 295)}
     
     <div style="display:flex;flex-direction:column;gap:16px">
       <sc-for list="{{ cases }}" as="c" hint-placeholder-count="6">
-        <article id="case-{{ $index }}" onMouseEnter="{{ c.enter }}" onMouseLeave="{{ c.leave }}" style="position:relative;z-index:{{ c.z }};background:{{ c.bg }};border-radius:32px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 2px 0 oklch(0.3 0.05 285 / .06)" style-hover="transform:{{ c.hoverTf }};box-shadow:0 14px 34px oklch(0.3 0.05 285 / .1)">
-          <button onClick="{{ c.toggle }}" style="all:unset;box-sizing:border-box;width:100%;position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:20px;padding:24px 26px;cursor:pointer">
+        <article id="case-{{ $index }}" onMouseEnter="{{ c.enter }}" onMouseMove="{{ c.peekMove }}" onMouseLeave="{{ c.leave }}" style="position:relative;z-index:{{ c.z }};background:{{ c.bg }};border-radius:32px;transition:transform .35s cubic-bezier(.34,1.56,.64,1),box-shadow .3s;box-shadow:0 2px 0 oklch(0.3 0.05 285 / .06)" style-hover="transform:{{ c.hoverTf }};box-shadow:0 14px 34px oklch(0.3 0.05 285 / .1)">
+          <button onClick="{{ c.toggle }}" data-cursor="{{ c.cursorLabel }}" style="all:unset;box-sizing:border-box;width:100%;position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:20px;padding:24px 26px;cursor:pointer">
             <span style="width:54px;height:54px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:500">{{ c.n }}</span>
             <span style="display:flex;flex-direction:column;gap:10px;min-width:0">
               <span style="font-size:clamp(21px,2.6vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.1">{{ c.title }}</span>
@@ -121,9 +121,8 @@ a:hover{color:oklch(0.5 0.14 295)}
               <span style="width:46px;height:46px;border-radius:50%;background:oklch(0.27 0.03 285);color:white;display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .3s;transform:{{ c.chevTf }}">+</span>
             </span>
             <sc-if value="{{ c.showPeek }}" hint-placeholder-val="{{ false }}">
-              <span style="position:absolute;right:210px;top:50%;width:310px;margin-top:-105px;box-sizing:border-box;padding:12px;border-radius:26px;background-color:{{ c.bgSoft }};background-image:radial-gradient({{ c.bg }} 2.5px,transparent 3px),radial-gradient({{ c.bg }} 2.5px,transparent 3px);background-size:16px 16px;background-position:0 0,8px 8px;border:2px solid white;transform:rotate(-4deg);box-shadow:0 22px 44px oklch(0.3 0.05 285 / .16);pointer-events:none;animation:peekIn .3s cubic-bezier(.34,1.56,.64,1) both">
-                <span style="display:block;aspect-ratio:16/10;border-radius:16px;border:3px solid white;background:white url({{ c.peekImg }}) top center/cover no-repeat;box-shadow:0 4px 12px oklch(0.3 0.05 285 / .1)"></span>
-                <span style="position:absolute;top:-12px;right:22px;background:white;padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(6deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">B ★</span>
+              <span data-peek="1" style="position:absolute;left:0;top:50%;width:300px;margin:-94px 0 0 -150px;pointer-events:none;z-index:2;transform:translateX({{ c.peekX }});transition:transform .45s cubic-bezier(.22,1,.36,1)">
+                <span style="display:block;aspect-ratio:16/10;border-radius:18px;background:white url({{ c.peekImg }}) top center/cover no-repeat;box-shadow:0 24px 48px oklch(0.3 0.05 285 / .22),0 0 0 1px oklch(0.3 0.05 285 / .06);animation:peekIn .5s cubic-bezier(.22,1,.36,1) both"></span>
               </span>
             </sc-if>
           </button>
@@ -150,7 +149,7 @@ a:hover{color:oklch(0.5 0.14 295)}
                     <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.48 0.03 285)">{{ c.aRate }}</span>
                   </div>
                   <sc-if value="{{ c.aImg }}" hint-placeholder-val="{{ false }}">
-                    <img ref="{{ c.aRef }}" alt="Variant A screenshot" onClick="{{ c.zoomA }}" style="cursor:zoom-in;display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
+                    <img ref="{{ c.aRef }}" alt="Variant A screenshot" onClick="{{ c.zoomA }}" data-cursor="zoom in ⤢" style="cursor:zoom-in;display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
                   </sc-if>
                   <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
                   <div style="aspect-ratio:4/3;border-radius:16px;background:repeating-linear-gradient(135deg,oklch(0.95 0.01 285) 0 10px,oklch(0.975 0.005 285) 10px 20px);display:flex;align-items:center;justify-content:center">
@@ -161,10 +160,10 @@ a:hover{color:oklch(0.5 0.14 295)}
                 <figure id="win-{{ $index }}" style="margin:0;background:white;border-radius:24px;padding:14px;box-shadow:0 0 0 3px {{ c.deep }}">
                   <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px;gap:8px">
                     <span style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px"><span style="width:30px;height:30px;border-radius:50%;background:{{ c.bg }};display:flex;align-items:center;justify-content:center;font-weight:800">B</span>Variant · after</span>
-                    <button onClick="{{ c.celebrate }}" style="all:unset;cursor:pointer;background:oklch(0.27 0.03 285);color:white;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;transform:rotate(3deg);transition:transform .25s" style-hover="transform:rotate(-4deg) scale(1.08)">Winner ★ {{ c.bRate }}</button>
+                    <button onClick="{{ c.celebrate }}" data-cursor="celebrate! ✦" style="all:unset;cursor:pointer;background:oklch(0.27 0.03 285);color:white;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;transform:rotate(3deg);transition:transform .25s" style-hover="transform:rotate(-4deg) scale(1.08)">Winner ★ {{ c.bRate }}</button>
                   </div>
                   <sc-if value="{{ c.bImg }}" hint-placeholder-val="{{ false }}">
-                    <img ref="{{ c.bRef }}" alt="Variant B screenshot" onClick="{{ c.zoomB }}" style="cursor:zoom-in;display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
+                    <img ref="{{ c.bRef }}" alt="Variant B screenshot" onClick="{{ c.zoomB }}" data-cursor="zoom in ⤢" style="cursor:zoom-in;display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
                   </sc-if>
                   <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
                   <div style="aspect-ratio:4/3;border-radius:16px;background:repeating-linear-gradient(135deg,{{ c.bg }} 0 10px,{{ c.bgSoft }} 10px 20px);display:flex;align-items:center;justify-content:center">
@@ -292,9 +291,10 @@ const PH = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://w
 const fmt = (v, unit, d) => unit === '$' ? '$' + v.toFixed(d) : v.toFixed(d) + unit;
 
 class Component extends DCLogic {
-  state = { open: null, p: 1, cols: 4, hover: null, zoom: null };
+  state = { open: {}, p: {}, cols: 4, hover: null, zoom: null };
+  rafs = {};
   confettiRef = React.createRef();
-  cursorRef = React.createRef();
+  cursorRef = React.createRef(); cursorInnerRef = React.createRef(); cursorLabelRef = React.createRef(); cursorPathRef = React.createRef();
   parts = [];
 
   componentDidMount() {
@@ -309,11 +309,13 @@ class Component extends DCLogic {
       const el = this.cursorRef.current; if (!el || this.props.customCursor === false) return;
       el.style.opacity = 1;
       el.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
-      const big = e.target.closest && e.target.closest('button,a');
+      const big = e.target.closest && e.target.closest('button,a,img');
       el.style.width = el.style.height = big ? '56px' : '26px';
       el.style.margin = big ? '-28px 0 0 -28px' : '-13px 0 0 -13px';
     };
     addEventListener('mousemove', this._move);
+    this._out = e => { if (!e.relatedTarget && this.cursorRef.current) this.cursorRef.current.style.opacity = 0; };
+    document.addEventListener('mouseout', this._out);
     addEventListener('keydown', this._esc);
     this._style = document.createElement('style');
     document.head.appendChild(this._style);
@@ -321,11 +323,13 @@ class Component extends DCLogic {
   }
   componentDidUpdate() { this.syncCursor(); }
   srcRef(src) { return el => { if (el && src && el.getAttribute('src') !== src) el.setAttribute('src', src); }; }
+  peekPos(e) { const r = e.currentTarget.getBoundingClientRect(); const x = e.clientX - r.left; return Math.max(170, Math.min(r.width - 330, x + 40)); }
   _esc = e => { if (e.key === 'Escape' && this.state.zoom) this.setState({ zoom: null }); };
   componentWillUnmount() {
     removeEventListener('keydown', this._esc);
+    document.removeEventListener('mouseout', this._out);
     removeEventListener('resize', this._size); removeEventListener('mousemove', this._move);
-    this._style && this._style.remove(); cancelAnimationFrame(this._raf); cancelAnimationFrame(this._craf);
+    this._style && this._style.remove(); Object.values(this.rafs).forEach(cancelAnimationFrame); cancelAnimationFrame(this._craf);
   }
   syncCursor() {
     const on = this.props.customCursor !== false;
@@ -362,20 +366,16 @@ class Component extends DCLogic {
   }
 
   toggle(i) {
-    if (this.state.open === i) return this.setState({ open: null });
-    this.setState({ open: i, p: 0 });
-    setTimeout(() => {
-      const el = document.getElementById('case-' + i);
-      if (el) window.scrollTo({ top: el.getBoundingClientRect().top + scrollY - 96, behavior: 'smooth' });
-    }, 30);
-    cancelAnimationFrame(this._raf);
+    cancelAnimationFrame(this.rafs[i]);
+    if (this.state.open[i]) return this.setState(s => ({ open: { ...s.open, [i]: false } }));
+    this.setState(s => ({ open: { ...s.open, [i]: true }, p: { ...s.p, [i]: 0 } }));
     const start = performance.now() + 250, dur = 1300;
     const step = t => {
       const k = Math.min(1, Math.max(0, (t - start) / dur));
-      this.setState({ p: 1 - Math.pow(1 - k, 3) });
-      if (k < 1) this._raf = requestAnimationFrame(step);
+      this.setState(s => ({ p: { ...s.p, [i]: 1 - Math.pow(1 - k, 3) } }));
+      if (k < 1) this.rafs[i] = requestAnimationFrame(step);
     };
-    this._raf = requestAnimationFrame(step);
+    this.rafs[i] = requestAnimationFrame(step);
     setTimeout(() => this.burstAt(i), 900);
   }
 
@@ -385,7 +385,7 @@ class Component extends DCLogic {
     const isTiles = false;
     const SPANS = { 4: [[1,1],[1,1],[2,2],[1,2],[1,2],[2,1]], 2: [[1,1],[1,1],[2,2],[1,1],[1,1],[2,1]], 1: [[1,1],[1,1],[1,2],[1,1],[1,1],[1,1]] }[cols];
     const cases = CASES.map((c, i) => {
-      const h = HUES[i], isOpen = open === i, prog = isOpen ? p : 1;
+      const h = HUES[i], isOpen = !!open[i], prog = isOpen ? (p[i] ?? 1) : 1;
       const metrics = c.metrics.filter(m => m[1] > 0).map(([label, a, b, unit, d]) => {
         const delta = (b - a) / a * 100;
         const lowerBetter = label === 'Time on page' && /Demo form|Checkout/.test(c.title);
@@ -403,8 +403,11 @@ class Component extends DCLogic {
         aImg: c.aImg || null, bImg: c.bImg || null, noImg: !c.aImg, isClosed: !isOpen,
         peekImg: c.bImg || PH, showPeek: this.state.hover === i && !isOpen && cols > 1, z: this.state.hover === i ? 3 : 1,
         aRef: this.srcRef(c.aImg), bRef: this.srcRef(c.bImg),
+        cursorLabel: isOpen ? 'close case' : 'open case →',
         zoomA: () => this.setState({ zoom: { i, v: 'a' } }), zoomB: () => this.setState({ zoom: { i, v: 'b' } }),
-        enter: () => this.setState({ hover: i }), leave: () => this.setState({ hover: null }),
+        enter: e => { this._peekX = this.peekPos(e); this.setState({ hover: i }); }, leave: () => this.setState({ hover: null }),
+        peekX: (this._peekX || 0) + 'px',
+        peekMove: e => { const el = e.currentTarget.querySelector('[data-peek]'); if (el) el.style.transform = `translateX(${this.peekPos(e)}px)`; },
         gc: isOpen ? '1 / -1' : `span ${SPANS[i][0]}`, gr: isOpen ? 'auto' : `span ${SPANS[i][1]}`,
         showPreview: SPANS[i][0] > 1 || SPANS[i][1] > 1,
         tileHoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 1.2 : -1.2}deg) scale(1.02)` : 'translateY(-4px)',
@@ -433,7 +436,7 @@ class Component extends DCLogic {
       zoomABg: z && z.v === 'a' ? dark : 'transparent', zoomAFg: z && z.v === 'a' ? 'white' : dark,
       zoomBBg: z && z.v === 'b' ? dark : 'transparent', zoomBFg: z && z.v === 'b' ? 'white' : dark,
     };
-    return { ...zoomVals, cases, steps, tools, isTiles, isList: !isTiles, cols, confettiRef: this.confettiRef, cursorRef: this.cursorRef };
+    return { ...zoomVals, cases, steps, tools, isTiles, isList: !isTiles, cols, confettiRef: this.confettiRef, cursorRef: this.cursorRef, cursorInnerRef: this.cursorInnerRef, cursorLabelRef: this.cursorLabelRef, cursorPathRef: this.cursorPathRef };
   }
 }
 </script>
