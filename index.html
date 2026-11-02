@@ -17,6 +17,7 @@ a{color:oklch(0.27 0.03 285);text-decoration:none}
 a:hover{color:oklch(0.5 0.14 295)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 @keyframes peekIn{from{opacity:0;clip-path:inset(50% 50% 50% 50% round 18px);transform:scale(.92) translateY(10px)}to{opacity:1;clip-path:inset(0 0 0 0 round 18px);transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.4) rotate(-20deg)}to{opacity:1;transform:rotate(6deg)}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 </style>
 </helmet>
@@ -45,7 +46,9 @@ a:hover{color:oklch(0.5 0.14 295)}
       <div style="display:flex;gap:4px;flex-wrap:wrap">
         <a href="#work" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 295)">Work</a>
         <a href="#about" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 350)">About</a>
+        <a href="#me" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 160)">Me</a>
         <a href="#process" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 160)">Process</a>
+        <a href="#experience" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 230)">Experience</a>
         <a href="#tools" style="padding:8px 16px;border-radius:999px;font-size:15px;font-weight:500" style-hover="background:oklch(0.94 0.04 95)">Tools</a>
       </div>
     </div>
@@ -58,7 +61,7 @@ a:hover{color:oklch(0.5 0.14 295)}
       <span style="display:inline-block;background:oklch(0.92 0.06 95);padding:7px 14px;border-radius:12px;font-weight:700;font-size:14px;transform:rotate(2deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);border:2px solid white">Section optimization</span>
       <span style="display:inline-block;background:oklch(0.92 0.06 350);padding:7px 14px;border-radius:12px;font-weight:700;font-size:14px;transform:rotate(-1deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);border:2px solid white">UX / UI</span>
     </div>
-    <h1 style="margin:0;font-size:clamp(52px,8vw,100px);line-height:.92;letter-spacing:-.045em;font-weight:800">Iryna<br>Liebieideva</h1>
+    <h1 style="margin:0;font-size:clamp(40px,5.4vw,68px);line-height:1;letter-spacing:-.04em;font-weight:800;text-wrap:balance">Improving digital experiences through data-driven design</h1>
     <p style="margin:32px 0 0;max-width:560px;font-size:clamp(19px,2vw,23px);line-height:1.45;text-wrap:pretty;color:oklch(0.42 0.03 285)">UX/UI designer running small experiments that move numbers. A/B tests, section redesigns and conversion tweaks, each with the data behind it.</p>
     <a href="#work" style="display:inline-flex;align-items:center;gap:10px;margin-top:36px;background:oklch(0.27 0.03 285);color:white;padding:16px 26px;border-radius:999px;font-weight:700;font-size:17px;transition:transform .2s" style-hover="transform:rotate(-2deg) scale(1.04);color:white">See the experiments <span style="display:inline-flex;width:24px;height:24px;border-radius:50%;background:oklch(0.92 0.06 160);color:oklch(0.27 0.03 285);align-items:center;justify-content:center;font-size:14px">↓</span></a>
       </div>
@@ -98,7 +101,7 @@ a:hover{color:oklch(0.5 0.14 295)}
   <section id="work" style="position:relative;max-width:1160px;margin:0 auto;padding:40px 20px 80px">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px">
       <h2 style="margin:0;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">Experiments</h2>
-      <p style="margin:0;font-size:16px;color:oklch(0.48 0.03 285)">6 cases · click one to open</p>
+      <p style="margin:0;font-size:16px;color:oklch(0.48 0.03 285)">10 cases · open as many as you like</p>
     </div>
     
     <div style="display:flex;flex-direction:column;gap:16px">
@@ -231,6 +234,87 @@ a:hover{color:oklch(0.5 0.14 295)}
     </div>
   </section>
 
+  <section id="experience" ref="{{ xpRef }}" style="position:relative;max-width:1160px;margin:0 auto;padding:40px 20px 120px">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:40px">
+      <h2 style="margin:0;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">Experience</h2>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center"><span style="display:inline-flex;align-items:baseline;gap:8px;background:oklch(0.92 0.06 95);padding:10px 18px;border-radius:16px;border:2px solid white;box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);transform:rotate(-3deg)"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums">{{ xpYears }}+</span><span style="font-size:15px;font-weight:700">years designing</span></span><span style="display:inline-flex;align-items:baseline;gap:8px;background:oklch(0.92 0.06 350);padding:10px 18px;border-radius:16px;border:2px solid white;box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);transform:rotate(2deg)"><span style="font-size:34px;font-weight:800;letter-spacing:-.04em;font-variant-numeric:tabular-nums">{{ xpClients }}+</span><span style="font-size:15px;font-weight:700">clients</span></span></div>
+    </div>
+    <div style="position:relative;padding-left:64px">
+      <div style="position:absolute;left:21px;top:8px;bottom:8px;width:4px;border-radius:4px;background:oklch(0.93 0.02 285)"></div>
+      <div ref="{{ xpLineRef }}" style="position:absolute;left:21px;top:8px;width:4px;height:0;border-radius:4px;background:linear-gradient(oklch(0.8 0.11 295),oklch(0.8 0.11 350),oklch(0.8 0.11 160))"></div>
+      <div style="display:flex;flex-direction:column;gap:22px">
+        <sc-for list="{{ jobs }}" as="j" hint-placeholder-count="3">
+          <div data-xp="{{ $index }}" style="position:relative;opacity:{{ j.op }};transform:{{ j.tf }};transition:opacity .7s ease,transform .8s cubic-bezier(.34,1.4,.64,1)">
+            <span style="position:absolute;left:-56px;top:26px;width:30px;height:30px;border-radius:50%;background:{{ j.bg }};border:4px solid white;box-shadow:0 0 0 2px {{ j.ring }};transform:scale({{ j.dot }});transition:transform .5s cubic-bezier(.34,1.8,.64,1) .15s"></span>
+            <div style="background:{{ j.bg }};border-radius:28px;padding:26px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:18px 32px;transition:transform .35s cubic-bezier(.34,1.56,.64,1)" style-hover="transform:translateX(6px) rotate(-.4deg)">
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <span style="align-self:flex-start;background:white;padding:4px 11px;border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:13px;transform:rotate(-2deg);box-shadow:0 2px 0 oklch(0.3 0.05 285 / .1)">{{ j.period }}</span>
+                <span style="font-size:clamp(24px,2.8vw,32px);font-weight:800;letter-spacing:-.03em;line-height:1.05">{{ j.company }}</span>
+                <span style="font-size:17px;font-weight:600;color:oklch(0.4 0.03 285)">{{ j.role }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ j.desc }}</p>
+                <span style="display:flex;gap:6px;flex-wrap:wrap">
+                  <sc-for list="{{ j.tags }}" as="t" hint-placeholder-count="3">
+                    <span style="background:oklch(1 0 0 / .65);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:500">{{ t }}</span>
+                  </sc-for>
+                </span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="me" style="position:relative;max-width:1160px;margin:0 auto;padding:60px 20px 120px">
+    <div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px">
+      <h2 style="margin:0;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">Off the clock</h2>
+      <p style="margin:0;font-size:16px;color:oklch(0.48 0.03 285)">A tiny A/B test about me. Pick a side and see if we match.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px;align-items:start">
+      <div style="background:oklch(0.92 0.06 295);border-radius:32px;padding:26px;box-shadow:0 2px 0 oklch(0.3 0.05 285 / .06);display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:4px">
+          <span style="font-size:clamp(21px,2.6vw,30px);font-weight:700;letter-spacing:-.02em">This or that?</span>
+          <span style="font-family:'JetBrains Mono',monospace;font-size:13px;background:white;padding:4px 11px;border-radius:9px;transform:rotate(-2deg);box-shadow:0 2px 0 oklch(0.3 0.05 285 / .1)">{{ gameStatus }}</span>
+        </div>
+        <sc-for list="{{ pairs }}" as="q" hint-placeholder-count="5">
+          <div style="display:grid;grid-template-columns:32px 1fr 1fr;gap:8px;align-items:center">
+            <span style="width:32px;height:32px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:12px">{{ q.n }}</span>
+            <button onClick="{{ q.pickA }}" style="all:unset;cursor:pointer;position:relative;box-sizing:border-box;text-align:center;padding:14px 10px;border-radius:999px;font-weight:600;font-size:16px;background:{{ q.aBg }};color:{{ q.aFg }};box-shadow:{{ q.aRing }};transition:transform .25s cubic-bezier(.34,1.56,.64,1),background .2s" style-hover="transform:rotate(-1.5deg) scale(1.03)">{{ q.a }}<sc-if value="{{ q.showA }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-10px;right:-6px;background:white;color:oklch(0.27 0.03 285);box-shadow:0 2px 0 oklch(0.3 0.05 285 / .12);font-size:11px;font-weight:700;padding:3px 8px;border-radius:9px;transform:rotate(6deg);animation:pop .45s cubic-bezier(.34,1.8,.64,1) both">Iryna ★</span></sc-if></button>
+            <button onClick="{{ q.pickB }}" style="all:unset;cursor:pointer;position:relative;box-sizing:border-box;text-align:center;padding:14px 10px;border-radius:999px;font-weight:600;font-size:16px;background:{{ q.bBg }};color:{{ q.bFg }};box-shadow:{{ q.bRing }};transition:transform .25s cubic-bezier(.34,1.56,.64,1),background .2s" style-hover="transform:rotate(1.5deg) scale(1.03)">{{ q.b }}<sc-if value="{{ q.showB }}" hint-placeholder-val="{{ false }}"><span style="position:absolute;top:-10px;right:-6px;background:white;color:oklch(0.27 0.03 285);box-shadow:0 2px 0 oklch(0.3 0.05 285 / .12);font-size:11px;font-weight:700;padding:3px 8px;border-radius:9px;transform:rotate(6deg);animation:pop .45s cubic-bezier(.34,1.8,.64,1) both">Iryna ★</span></sc-if></button>
+          </div>
+        </sc-for>
+        <div style="margin-top:8px;display:flex;flex-direction:column;gap:10px">
+          <div style="height:10px;border-radius:999px;background:oklch(1 0 0 / .6);overflow:hidden"><div style="height:100%;width:{{ matchW }};border-radius:999px;background:linear-gradient(90deg,oklch(0.8 0.11 295),oklch(0.8 0.11 350),oklch(0.8 0.11 160));transition:width .6s cubic-bezier(.34,1.3,.64,1)"></div></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+            <span style="font-size:15px;font-weight:600">{{ matchText }}</span>
+            <button onClick="{{ resetGame }}" style="all:unset;cursor:pointer;font-size:14px;font-weight:700;padding:8px 14px;border-radius:999px;background:oklch(0.27 0.03 285);color:white;transition:transform .2s" style-hover="transform:translateY(-2px)">Run again ↺</button>
+          </div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+        <sc-for list="{{ facts }}" as="f" hint-placeholder-count="4">
+          <div style="height:200px;perspective:1000px;transition:transform .35s cubic-bezier(.34,1.56,.64,1)" style-hover="transform:rotate({{ f.hoverRot }}) translateY(-4px)">
+            <button onClick="{{ f.flip }}" style="all:unset;cursor:pointer;display:block;position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.34,1.3,.64,1);transform:{{ f.tf }}">
+              <span style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:{{ f.bg }};border-radius:28px;padding:20px;display:flex;flex-direction:column;justify-content:space-between">
+                <span style="width:40px;height:40px;border-radius:50%;background:white;display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px">{{ f.n }}</span>
+                <span style="font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.1;">{{ f.title }}</span>
+                <span style="font-size:13px;font-weight:600;color:oklch(0.42 0.03 285)">tap to flip ↻</span>
+              </span>
+              <span style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:oklch(0.27 0.03 285);color:white;border-radius:28px;padding:20px;display:flex;flex-direction:column;justify-content:space-between">
+                <span style="font-size:12px;font-weight:700;color:{{ f.light }}">{{ f.title }}</span>
+                <span style="font-size:16px;line-height:1.45">{{ f.back }}</span>
+              </span>
+            </button>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    </div>
+  </section>
+
   <footer style="max-width:1160px;margin:0 auto;padding:30px 20px 40px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:14px;color:oklch(0.5 0.03 285);border-top:2px dashed oklch(0.9 0.02 285)">
     <span>© 2026 Iryna Liebieideva</span>
     <a href="#top">Back to top ↑</a>
@@ -278,6 +362,30 @@ const CASES = [
     approach: '[Approach] The hypothesis, what changed in variant B, and why.',
     meta: '3 weeks · 14,100 carts · 98% confidence',
     metrics: [['Conversion rate', 12.0, 12.4, '%', 1], ['CTR', 3.1, 9.6, '%', 1], ['Time on page', 35, 39, 's', 0], ['AOV', 48, 56, '$', 0]] },
+  { title: 'Hero headline copy', type: 'A/B test', area: 'Landing', headlineIdx: 1,
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '10 days · 40,200 visitors · 95% confidence',
+    metrics: [['Conversion rate', 1.9, 2.2, '%', 1], ['CTR', 6.2, 7.9, '%', 1], ['Time on page', 38, 44, 's', 0], ['AOV', 0, 0, '$', 0]] },
+  { title: 'Free shipping bar', type: 'Section redesign', area: 'Cart', headlineIdx: 3,
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '3 weeks · 11,800 carts · 97% confidence',
+    metrics: [['Conversion rate', 11.5, 12.9, '%', 1], ['CTR', 0, 0, '%', 1], ['Time on page', 33, 36, 's', 0], ['AOV', 44, 51, '$', 0]] },
+  { title: 'Express pay buttons', type: 'A/B test', area: 'Checkout', headlineIdx: 0,
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '2 weeks · 8,300 sessions · 99% confidence',
+    metrics: [['Conversion rate', 52, 58.4, '%', 1], ['CTR', 18, 27, '%', 1], ['Time on page', 92, 71, 's', 0], ['AOV', 61, 62, '$', 0]] },
+  { title: 'Search filters panel', type: 'Section redesign', area: 'Search', headlineIdx: 1,
+    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
+    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
+    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
+    meta: '3 weeks · 27,500 searches · 96% confidence',
+    metrics: [['Conversion rate', 4.1, 4.6, '%', 1], ['CTR', 18.0, 23.4, '%', 1], ['Time on page', 72, 64, 's', 0], ['AOV', 0, 0, '$', 0]] }
 ];
 const STEPS = [
   ['Audit', '[Short description] Analytics, heatmaps and recordings to find where users struggle.'],
@@ -285,14 +393,15 @@ const STEPS = [
   ['Design & test', '[Short description] Build the variant, split traffic, run to significance.'],
   ['Learn & ship', '[Short description] Roll out the winner and document what it taught us.'],
 ];
-const TOOLS = ['Figma', 'FigJam', 'Google Analytics 4', 'Hotjar', 'Optimizely', 'VWO', 'Maze', 'Looker Studio', 'Webflow', 'Usability testing', 'Information architecture', 'Prototyping'];
+const TOOLS = ['UX Research', 'CRO', 'Analytics', 'UX Audit', 'UI Design', 'A/B Testing', 'Prototyping', 'Wireframing', 'Design Systems', 'E-commerce', 'Figma', 'FigJam', 'Google Analytics', 'Webflow', 'AI'];
 
-const PH = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250"><rect width="400" height="250" fill="#f3f0f7"/><text x="200" y="130" font-family="monospace" font-size="14" fill="#8a8494" text-anchor="middle">screenshot · variant B</text></svg>');
+const PH = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="250"><rect width="400" height="250" fill="#f3f0f7"/><text x="200" y="130" font-family="monospace" font-size="14" fill="#8a8494" text-anchor="middle">screenshot · variant B</text></svg>');
 const fmt = (v, unit, d) => unit === '$' ? '$' + v.toFixed(d) : v.toFixed(d) + unit;
 
 class Component extends DCLogic {
-  state = { open: {}, p: {}, cols: 4, hover: null, zoom: null };
+  state = { heat: {}, revealed: false,  hand: [0, 5, 10], dealing: false, deals: 0, picks: {}, flips: {}, xpSeen: {}, xpYears: 0, xpClients: 0, open: {}, p: {}, cols: 4, hover: null, zoom: null };
   rafs = {};
+  xpRef = React.createRef(); xpLineRef = React.createRef();
   confettiRef = React.createRef();
   cursorRef = React.createRef(); cursorInnerRef = React.createRef(); cursorLabelRef = React.createRef(); cursorPathRef = React.createRef();
   parts = [];
@@ -317,6 +426,22 @@ class Component extends DCLogic {
     this._out = e => { if (!e.relatedTarget && this.cursorRef.current) this.cursorRef.current.style.opacity = 0; };
     document.addEventListener('mouseout', this._out);
     addEventListener('keydown', this._esc);
+    this._xpScroll = () => {
+      const sec = this.xpRef.current, line = this.xpLineRef.current; if (!sec || !line) return;
+      const r = sec.getBoundingClientRect(), track = line.parentElement.getBoundingClientRect();
+      const prog = Math.max(0, Math.min(1, (innerHeight * 0.7 - track.top) / (track.height - 16)));
+      line.style.height = Math.max(0, (track.height - 16) * prog) + 'px';
+      const seen = { ...this.state.xpSeen }; let changed = false;
+      sec.querySelectorAll('[data-xp]').forEach(el => { const k = el.getAttribute('data-xp'); if (!seen[k] && el.getBoundingClientRect().top < innerHeight * 0.82) { seen[k] = true; changed = true; } });
+      if (changed) this.setState({ xpSeen: seen });
+      if (!this._xpCounted && r.top < innerHeight * 0.8) {
+        this._xpCounted = true; const t0 = performance.now();
+        const tick = t => { const k = Math.min(1, (t - t0) / 1200); const e = 1 - Math.pow(1 - k, 3); this.setState({ xpYears: Math.round(5 * e), xpClients: Math.round(50 * e) }); if (k < 1) this._xpRaf = requestAnimationFrame(tick); };
+        this._xpRaf = requestAnimationFrame(tick);
+      }
+    };
+    addEventListener('scroll', this._xpScroll, { passive: true }); addEventListener('resize', this._xpScroll);
+    setTimeout(this._xpScroll, 100);
     this._style = document.createElement('style');
     document.head.appendChild(this._style);
     this.syncCursor();
@@ -324,9 +449,30 @@ class Component extends DCLogic {
   componentDidUpdate() { this.syncCursor(); }
   srcRef(src) { return el => { if (el && src && el.getAttribute('src') !== src) el.setAttribute('src', src); }; }
   peekPos(e) { const r = e.currentTarget.getBoundingClientRect(); const x = e.clientX - r.left; return Math.max(170, Math.min(r.width - 330, x + 40)); }
+  shuffle(total) {
+    if (this.state.dealing) return;
+    this.setState({ dealing: true });
+    clearTimeout(this._deal);
+    this._deal = setTimeout(() => {
+      const prev = new Set(this.state.hand), pool = [...Array(total).keys()].filter(i => !prev.has(i));
+      for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+      this.setState(s => ({ hand: pool.slice(0, 3), deals: s.deals + 1 }));
+      setTimeout(() => this.setState({ dealing: false }), 40);
+    }, 520);
+  }
+  pick(i, v, e) {
+    if (this.state.picks[i]) return;
+    const MINE = ['a', 'b', 'b', 'a', 'a'];
+    const x = e.clientX, y = e.clientY;
+    this.setState(s => ({ picks: { ...s.picks, [i]: v } }), () => {
+      const p = this.state.picks, done = Object.keys(p).length === 5, m = Object.entries(p).filter(([k, val]) => MINE[k] === val).length;
+      if (done && m >= 4) this.confetti(x, y);
+    });
+  }
   _esc = e => { if (e.key === 'Escape' && this.state.zoom) this.setState({ zoom: null }); };
   componentWillUnmount() {
     removeEventListener('keydown', this._esc);
+    removeEventListener('scroll', this._xpScroll); removeEventListener('resize', this._xpScroll); cancelAnimationFrame(this._xpRaf);
     document.removeEventListener('mouseout', this._out);
     removeEventListener('resize', this._size); removeEventListener('mousemove', this._move);
     this._style && this._style.remove(); Object.values(this.rafs).forEach(cancelAnimationFrame); cancelAnimationFrame(this._craf);
@@ -385,7 +531,7 @@ class Component extends DCLogic {
     const isTiles = false;
     const SPANS = { 4: [[1,1],[1,1],[2,2],[1,2],[1,2],[2,1]], 2: [[1,1],[1,1],[2,2],[1,1],[1,1],[2,1]], 1: [[1,1],[1,1],[1,2],[1,1],[1,1],[1,1]] }[cols];
     const cases = CASES.map((c, i) => {
-      const h = HUES[i], isOpen = !!open[i], prog = isOpen ? (p[i] ?? 1) : 1;
+      const h = HUES[i % HUES.length], isOpen = !!open[i], prog = isOpen ? (p[i] ?? 1) : 1;
       const metrics = c.metrics.filter(m => m[1] > 0).map(([label, a, b, unit, d]) => {
         const delta = (b - a) / a * 100;
         const lowerBetter = label === 'Time on page' && /Demo form|Checkout/.test(c.title);
@@ -408,8 +554,8 @@ class Component extends DCLogic {
         enter: e => { this._peekX = this.peekPos(e); this.setState({ hover: i }); }, leave: () => this.setState({ hover: null }),
         peekX: (this._peekX || 0) + 'px',
         peekMove: e => { const el = e.currentTarget.querySelector('[data-peek]'); if (el) el.style.transform = `translateX(${this.peekPos(e)}px)`; },
-        gc: isOpen ? '1 / -1' : `span ${SPANS[i][0]}`, gr: isOpen ? 'auto' : `span ${SPANS[i][1]}`,
-        showPreview: SPANS[i][0] > 1 || SPANS[i][1] > 1,
+        gc: 'auto', gr: 'auto',
+        showPreview: false,
         tileHoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 1.2 : -1.2}deg) scale(1.02)` : 'translateY(-4px)',
         bg: `oklch(0.92 0.06 ${h})`, bgSoft: `oklch(0.96 0.03 ${h})`, deep: `oklch(0.5 0.13 ${h})`,
         hoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 0.8 : -0.8}deg) scale(1.01)` : 'translateY(-3px)',
@@ -436,7 +582,69 @@ class Component extends DCLogic {
       zoomABg: z && z.v === 'a' ? dark : 'transparent', zoomAFg: z && z.v === 'a' ? 'white' : dark,
       zoomBBg: z && z.v === 'b' ? dark : 'transparent', zoomBFg: z && z.v === 'b' ? 'white' : dark,
     };
-    return { ...zoomVals, cases, steps, tools, isTiles, isList: !isTiles, cols, confettiRef: this.confettiRef, cursorRef: this.cursorRef, cursorInnerRef: this.cursorInnerRef, cursorLabelRef: this.cursorLabelRef, cursorPathRef: this.cursorPathRef };
+    const JOBS = [
+      { company: '[Company name]', role: 'Senior Product Designer', period: '2023 — now', hue: 295, tags: ['A/B testing', 'Design system', 'Growth'] },
+      { company: '[Company name]', role: 'Product Designer', period: '2021 — 2023', hue: 350, tags: ['E-commerce', 'Checkout', 'Research'] },
+      { company: '[Company name]', role: 'UX/UI Designer', period: '2019 — 2021', hue: 160, tags: ['Landing pages', 'Prototyping', 'Web'] },
+    ];
+    const jobs = JOBS.map((j, i) => { const on = !!this.state.xpSeen[i]; return { ...j, desc: '[Description] Two or three sentences about the product, your responsibilities and one result you are proud of.', bg: `oklch(0.95 0.035 ${j.hue})`, ring: `oklch(0.8 0.11 ${j.hue})`, op: on ? 1 : 0, tf: on ? 'none' : 'translateY(40px) rotate(1deg)', dot: on ? 1 : 0 }; });
+    const PAIRS = [['Coffee', 'Matcha'], ['Early bird', 'Night owl'], ['Mountains', 'Sea'], ['Dark mode', 'Light mode'], ['Cats', 'Dogs']];
+    const MINE = ['a', 'b', 'b', 'a', 'a'];
+    const picks = this.state.picks, answered = Object.keys(picks).length, matches = Object.entries(picks).filter(([i, v]) => MINE[i] === v).length;
+    const ring = '0 0 0 2.5px oklch(0.27 0.03 285)';
+    const pairs = PAIRS.map(([a, b], i) => {
+      const p = picks[i], mine = MINE[i];
+      const col = s => !p ? 'white' : s === mine ? 'oklch(0.27 0.03 285)' : 'oklch(1 0 0 / .5)';
+      const hu = [295, 350, 160, 230, 95][i];
+      return { n: String(i + 1).padStart(2, '0'), a, b, aBg: col('a'), bBg: col('b'), aFg: p && mine === 'a' ? 'white' : 'oklch(0.27 0.03 285)', bFg: p && mine === 'b' ? 'white' : 'oklch(0.27 0.03 285)', dot: `oklch(0.9 0.07 ${hu})`, aBorder: p ? 'transparent' : `oklch(0.8 0.1 ${hu})`, bBorder: p ? 'transparent' : `oklch(0.8 0.1 ${hu})`, aRing: p === 'a' ? ring : 'none', bRing: p === 'b' ? ring : 'none', showA: !!p && mine === 'a', showB: !!p && mine === 'b',
+        pickA: e => this.pick(i, 'a', e), pickB: e => this.pick(i, 'b', e) };
+    });
+    const matchText = answered < PAIRS.length ? `${matches} of ${answered} matched so far` : matches >= 4 ? `${matches}/5 match. We'd work well together ✦` : matches >= 2 ? `${matches}/5 match. Opposites make good teams` : `${matches}/5. Our results are not significant`;
+    const FACTS = [
+      ['Weekend mode', '[Your answer] e.g. long walks, film photography, a new café every Saturday.'],
+      ['Comfort food', '[Your answer] The dish you would A/B test against nothing.'],
+      ['Hidden talent', '[Your answer] Something people would never guess.'],
+      ['Currently learning', '[Your answer] A skill, language or hobby in progress.'],
+    ];
+    const facts = FACTS.map(([title, back], i) => ({ title, back, n: String(i + 1).padStart(2, '0'), bg: `oklch(0.92 0.06 ${[350, 160, 95, 230][i]})`, light: `oklch(0.86 0.1 ${[350, 160, 95, 230][i]})`, rot: ['-1.5deg', '1deg', '1.5deg', '-1deg'][i], hoverRot: ['2deg', '-2deg', '-1.5deg', '2deg'][i], spark: `oklch(0.6 0.15 ${[350, 160, 95, 230][i]})`, backBg: `oklch(0.4 0.1 ${[350, 160, 95, 230][i]})`, tf: this.state.flips[i] ? 'rotateY(180deg)' : 'none', flip: () => this.setState(s => ({ flips: { ...s.flips, [i]: !s.flips[i] } })) }));
+    const MOOD = [
+      ['Song', '♪', '[Song title]', '[Artist] · the song on repeat while designing'],
+      ['Song', '♪', '[Song title]', '[Artist] · Friday evening energy'],
+      ['Song', '♪', '[Song title]', '[Artist] · the one I know every word of'],
+      ['Food', '◐', '[Favourite dish]', '[Why it wins every A/B test]'],
+      ['Food', '◐', '[Snack]', '[The thing always on my desk]'],
+      ['Food', '◐', '[Dessert]', '[Where to get the best one]'],
+      ['Place', '◎', '[City]', '[A place I keep coming back to]'],
+      ['Place', '◎', '[Café or spot]', '[Where my best ideas show up]'],
+      ['Place', '◎', '[Dream trip]', '[Next on the list]'],
+      ['Tool', '⌘', 'Figma', 'Where everything starts'],
+      ['Tool', '⌘', 'Hotjar heatmaps', 'Watching real users is my favourite show'],
+      ['Tool', '⌘', 'A paper notebook', 'For ideas that are not ready for pixels'],
+      ['Quote', '❝', '[Quote]', '[Author]'],
+      ['Quote', '❝', '[Quote]', '[Author]'],
+      ['Quote', '❝', '[Quote]', '[Author]'],
+    ];
+    const CAT = { Song: 295, Food: 350, Place: 160, Tool: 230, Quote: 95 };
+    const hand = this.state.hand.map((idx, i) => { const [cat, glyph, title, note] = MOOD[idx]; const hu = CAT[cat]; return { cat, glyph, title, note, bg: `oklch(0.93 0.055 ${hu})`, ink: `oklch(0.5 0.12 ${hu})`, rot: ['-2deg', '1deg', '2.5deg'][i], delay: (i * 0.09) + 's', tf: this.state.dealing ? 'rotateY(180deg) translateY(-10px)' : 'none' }; });
+    const moodVals = { hand, deckStatus: `15 cards · ${this.state.deals} shuffles`, shuffle: () => this.shuffle(MOOD.length) };
+    const TILES = [['Coffee', '☕', 3], ['Travel', '✈', 3], ['Cats', '◕', 2], ['Design', '✦', 3], ['Books', '❒', 2], ['Yoga', '◯', 1], ['Cooking', '◐', 2], ['Film photos', '▣', 1], ['Museums', '⌂', 2], ['Gaming', '◆', 0], ['Plants', '❦', 3], ['Spreadsheets', '▦', 1]];
+    const RAMP = ['white', 'oklch(0.93 0.05 230)', 'oklch(0.88 0.08 300)', 'oklch(0.85 0.1 350)', 'oklch(0.86 0.11 50)'];
+    const heat = this.state.heat, rev = this.state.revealed;
+    let overlap = 0;
+    const tiles = TILES.map(([label, glyph, mine], i) => {
+      const v = heat[i] || 0, isMatch = rev && v >= 2 && mine >= 2;
+      if (isMatch) overlap++;
+      return { label, glyph, bg: RAMP[v], shadow: v >= 3 ? '0 0 0 3px white, 0 10px 24px oklch(0.75 0.12 350 / .45)' : v ? '0 0 0 2px white' : '0 0 0 1px oklch(0.9 0.01 285)',
+        mineCol: 'oklch(0.55 0.15 295)', mineOp: rev ? [0, .18, .32, .5][mine] : 0, delay: (i * 0.04) + 's', isMatch,
+        warm: () => this.setState(st => ({ heat: { ...st.heat, [i]: Math.min(4, (st.heat[i] || 0) + 1) } })) };
+    });
+    const hot = Object.values(heat).filter(v => v >= 2).length;
+    const heatVals = { tiles, heatStatus: `${hot} hot spots`, revealLabel: rev ? 'Hide my map' : 'Reveal my heatmap',
+      heatText: !rev ? (hot ? 'Nice. Now compare with mine →' : 'Start hovering to heat things up') : overlap >= 4 ? `We overlap on ${overlap} things. Same wavelength ✦` : overlap ? `We overlap on ${overlap} thing${overlap > 1 ? 's' : ''}` : 'No overlap yet. Heat up a few more tiles',
+      toggleReveal: e => { const was = this.state.revealed; this.setState({ revealed: !was }); if (!was) { const x = e.clientX, y = e.clientY; setTimeout(() => { if (tiles.filter((t, i) => (heat[i] || 0) >= 2 && TILES[i][2] >= 2).length >= 4) this.confetti(x, y); }, 400); } },
+      resetHeat: () => this.setState({ heat: {}, revealed: false }) };
+    const gameVals = { ...heatVals, ...moodVals, pairs, facts, matchText, matchW: (answered ? matches / PAIRS.length * 100 : 0) + '%', gameStatus: answered < PAIRS.length ? `${answered}/5 answered` : 'test complete', resetGame: () => this.setState({ picks: {} }) };
+    return { ...gameVals, jobs, xpYears: this.state.xpYears, xpClients: this.state.xpClients, xpRef: this.xpRef, xpLineRef: this.xpLineRef, ...zoomVals, cases, steps, tools, isTiles, isList: !isTiles, cols, confettiRef: this.confettiRef, cursorRef: this.cursorRef, cursorInnerRef: this.cursorInnerRef, cursorLabelRef: this.cursorLabelRef, cursorPathRef: this.cursorPathRef };
   }
 }
 </script>
