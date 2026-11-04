@@ -9,7 +9,7 @@
 <x-dc>
 <helmet>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600&display=swap" rel="stylesheet">
 <style>
 html{scroll-behavior:smooth}
 body{margin:0;background:oklch(0.985 0.008 80);color:oklch(0.27 0.03 285);font-family:'Bricolage Grotesque',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
@@ -28,9 +28,10 @@ a:hover{color:oklch(0.5 0.14 295)}
       <div style="position:fixed;top:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:8px;background:white;border-radius:999px;padding:6px;box-shadow:0 10px 30px oklch(0.3 0.05 285 / .2);z-index:81">
         <button onClick="{{ zoomToA }}" style="all:unset;cursor:pointer;padding:8px 16px;border-radius:999px;font-weight:700;font-size:15px;background:{{ zoomABg }};color:{{ zoomAFg }}">A · Control</button>
         <button onClick="{{ zoomToB }}" style="all:unset;cursor:pointer;padding:8px 16px;border-radius:999px;font-weight:700;font-size:15px;background:{{ zoomBBg }};color:{{ zoomBFg }}">B · Variant ★</button>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.48 0.03 285);padding:0 6px">{{ zoomCap }}</span>
         <button onClick="{{ closeZoom }}" aria-label="Close" style="all:unset;cursor:pointer;width:38px;height:38px;border-radius:50%;background:oklch(0.94 0.02 285);display:flex;align-items:center;justify-content:center;font-size:20px;transform:rotate(45deg)">+</button>
       </div>
-      <img ref="{{ zoomRef }}" alt="{{ zoomAlt }}" onClick="{{ stop }}" style="display:block;width:100%;max-width:1280px;height:auto;border-radius:20px;border:6px solid white;box-shadow:0 30px 80px oklch(0.2 0.05 285 / .35);cursor:default">
+      <img ref="{{ zoomRef }}" alt="{{ zoomAlt }}" onClick="{{ stop }}" style="display:block;width:{{ zoomW }};max-width:1280px;height:auto;border-radius:20px;border:6px solid white;box-shadow:0 30px 80px oklch(0.2 0.05 285 / .35);cursor:default">
     </div>
   </sc-if>
   <canvas ref="{{ confettiRef }}" style="position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:60"></canvas>
@@ -61,8 +62,8 @@ a:hover{color:oklch(0.5 0.14 295)}
       <span style="display:inline-block;background:oklch(0.92 0.06 95);padding:7px 14px;border-radius:12px;font-weight:700;font-size:14px;transform:rotate(2deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);border:2px solid white">Section optimization</span>
       <span style="display:inline-block;background:oklch(0.92 0.06 350);padding:7px 14px;border-radius:12px;font-weight:700;font-size:14px;transform:rotate(-1deg);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12);border:2px solid white">UX / UI</span>
     </div>
-    <h1 style="margin:0;font-size:clamp(40px,5.4vw,68px);line-height:1;letter-spacing:-.04em;font-weight:800;text-wrap:balance">Improving digital experiences through data-driven design</h1>
-    <p style="margin:32px 0 0;max-width:560px;font-size:clamp(19px,2vw,23px);line-height:1.45;text-wrap:pretty;color:oklch(0.42 0.03 285)">UX/UI designer running small experiments that move numbers. A/B tests, section redesigns and conversion tweaks, each with the data behind it.</p>
+    <h1 style="margin:0;font-size:clamp(38px,4.8vw,60px);line-height:1.02;letter-spacing:-.04em;font-weight:800;text-wrap:balance">I design digital experiences shaped by data, strategy, and real-world challenges.</h1>
+    <p style="margin:32px 0 0;max-width:560px;font-size:clamp(19px,2vw,23px);line-height:1.45;text-wrap:pretty;color:oklch(0.42 0.03 285)">With 5+ years of experience working with digital products across different industries, I combine analytical thinking, UX expertise, and hands-on design to solve complex problems and improve user experiences.</p>
     <a href="#work" style="display:inline-flex;align-items:center;gap:10px;margin-top:36px;background:oklch(0.27 0.03 285);color:white;padding:16px 26px;border-radius:999px;font-weight:700;font-size:17px;transition:transform .2s" style-hover="transform:rotate(-2deg) scale(1.04);color:white">See the experiments <span style="display:inline-flex;width:24px;height:24px;border-radius:50%;background:oklch(0.92 0.06 160);color:oklch(0.27 0.03 285);align-items:center;justify-content:center;font-size:14px">↓</span></a>
       </div>
     <div aria-hidden="true" style="position:relative;height:520px;max-width:520px;width:100%;justify-self:center">
@@ -101,7 +102,7 @@ a:hover{color:oklch(0.5 0.14 295)}
   <section id="work" style="position:relative;max-width:1160px;margin:0 auto;padding:40px 20px 80px">
     <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px">
       <h2 style="margin:0;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">Experiments</h2>
-      <p style="margin:0;font-size:16px;color:oklch(0.48 0.03 285)">10 cases · open as many as you like</p>
+      <p style="margin:0;font-size:16px;color:oklch(0.48 0.03 285)">6 cases · open as many as you like</p>
     </div>
     
     <div style="display:flex;flex-direction:column;gap:16px">
@@ -112,14 +113,13 @@ a:hover{color:oklch(0.5 0.14 295)}
             <span style="display:flex;flex-direction:column;gap:10px;min-width:0">
               <span style="font-size:clamp(21px,2.6vw,30px);font-weight:700;letter-spacing:-.02em;line-height:1.1">{{ c.title }}</span>
               <span style="display:flex;gap:8px;flex-wrap:wrap">
-                <span style="background:white;padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(-2deg);box-shadow:0 2px 0 oklch(0.3 0.05 285 / .1)">{{ c.type }}</span>
-                <span style="background:oklch(1 0 0 / .55);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:500;transform:rotate(1.5deg)">{{ c.area }}</span>
+                <sc-for list="{{ c.tagList }}" as="t" hint-placeholder-count="3"><span style="background:{{ t.bg }};padding:4px 11px;border-radius:9px;font-size:13px;font-weight:{{ t.w }};transform:rotate({{ t.rot }})">{{ t.label }}</span></sc-for>
               </span>
             </span>
             <span style="display:flex;align-items:center;gap:16px">
               <span style="text-align:right;display:flex;flex-direction:column">
                 <span style="font-size:clamp(22px,3vw,34px);font-weight:800;letter-spacing:-.03em;color:{{ c.deep }}">{{ c.headline }}</span>
-                <span style="font-size:13px;color:oklch(0.42 0.03 285)">{{ c.headlineLabel }}</span>
+                <span style="font-size:13px;color:oklch(0.42 0.03 285);max-width:170px;line-height:1.3">{{ c.headlineLabel }}</span>
               </span>
               <span style="width:46px;height:46px;border-radius:50%;background:oklch(0.27 0.03 285);color:white;display:flex;align-items:center;justify-content:center;font-size:22px;transition:transform .3s;transform:{{ c.chevTf }}">+</span>
             </span>
@@ -134,46 +134,65 @@ a:hover{color:oklch(0.5 0.14 295)}
             <div style="padding:6px 26px 30px;animation:fadeUp .5s ease both;display:flex;flex-direction:column;gap:18px">
               <p style="margin:0;max-width:760px;font-size:19px;line-height:1.5;text-wrap:pretty">{{ c.intro }}</p>
 
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px">
                 <div style="background:white;border-radius:24px;padding:24px">
                   <div style="display:inline-block;background:oklch(0.92 0.06 350);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(-2deg);margin-bottom:14px">The challenge</div>
                   <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ c.challenge }}</p>
                 </div>
                 <div style="background:white;border-radius:24px;padding:24px">
                   <div style="display:inline-block;background:oklch(0.92 0.06 160);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(2deg);margin-bottom:14px">The approach</div>
-                  <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ c.approach }}</p>
+                  <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ c.lead }}</p>
                 </div>
               </div>
 
-              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px">
+              <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:6px 4px 0">
+                <span style="font-weight:700;font-size:18px">Design comparison</span>
+                <sc-if value="{{ c.hasMobile }}" hint-placeholder-val="{{ true }}">
+                  <div style="display:flex;gap:4px;background:white;border-radius:999px;padding:4px">
+                    <button onClick="{{ c.setD }}" style="all:unset;cursor:pointer;padding:7px 16px;border-radius:999px;font-size:14px;font-weight:700;background:{{ c.dBg }};color:{{ c.dFg }}">Desktop</button>
+                    <button onClick="{{ c.setM }}" style="all:unset;cursor:pointer;padding:7px 16px;border-radius:999px;font-size:14px;font-weight:700;background:{{ c.mBg }};color:{{ c.mFg }}">Mobile</button>
+                  </div>
+                </sc-if>
+              </div>
+              <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px;align-items:start">
                 <figure style="margin:0;background:white;border-radius:24px;padding:14px">
-                  <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px;gap:8px">
-                    <span style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px"><span style="width:30px;height:30px;border-radius:50%;background:oklch(0.93 0.01 285);display:flex;align-items:center;justify-content:center;font-weight:800">A</span>Control · before</span>
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.48 0.03 285)">{{ c.aRate }}</span>
+                  <div style="display:flex;align-items:center;padding:4px 6px 12px;gap:10px;font-weight:700;font-size:15px"><span style="width:30px;height:30px;border-radius:50%;background:oklch(0.93 0.01 285);display:flex;align-items:center;justify-content:center;font-weight:800">A</span>Control · before</div>
+                  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:{{ c.shotJustify }}">
+                    <sc-for list="{{ c.aShots }}" as="s" hint-placeholder-count="1">
+                      <div style="flex:{{ s.flex }};min-width:0;display:flex;flex-direction:column;gap:6px">
+                        <img ref="{{ s.ref }}" alt="Control screenshot" onClick="{{ s.zoom }}" data-cursor="zoom in ⤢" style="cursor:zoom-in;display:block;width:100%;height:auto;max-height:{{ s.maxH }};object-fit:contain;object-position:top;border-radius:14px;border:1px solid oklch(0.93 0.01 285)">
+                        <sc-if value="{{ s.hasCap }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.48 0.03 285);padding:0 4px">{{ s.cap }}</span></sc-if>
+                      </div>
+                    </sc-for>
                   </div>
-                  <sc-if value="{{ c.aImg }}" hint-placeholder-val="{{ false }}">
-                    <img ref="{{ c.aRef }}" alt="Variant A screenshot" onClick="{{ c.zoomA }}" data-cursor="zoom in ⤢" style="cursor:zoom-in;display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
-                  </sc-if>
-                  <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
-                  <div style="aspect-ratio:4/3;border-radius:16px;background:repeating-linear-gradient(135deg,oklch(0.95 0.01 285) 0 10px,oklch(0.975 0.005 285) 10px 20px);display:flex;align-items:center;justify-content:center">
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.5 0.03 285);background:white;padding:6px 10px;border-radius:8px">screenshot · variant A</span>
-                  </div>
-                  </sc-if>
                 </figure>
                 <figure id="win-{{ $index }}" style="margin:0;background:white;border-radius:24px;padding:14px;box-shadow:0 0 0 3px {{ c.deep }}">
                   <div style="display:flex;justify-content:space-between;align-items:center;padding:4px 6px 12px;gap:8px">
                     <span style="display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px"><span style="width:30px;height:30px;border-radius:50%;background:{{ c.bg }};display:flex;align-items:center;justify-content:center;font-weight:800">B</span>Variant · after</span>
-                    <button onClick="{{ c.celebrate }}" data-cursor="celebrate! ✦" style="all:unset;cursor:pointer;background:oklch(0.27 0.03 285);color:white;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;transform:rotate(3deg);transition:transform .25s" style-hover="transform:rotate(-4deg) scale(1.08)">Winner ★ {{ c.bRate }}</button>
+                    <button onClick="{{ c.celebrate }}" data-cursor="celebrate! ✦" style="all:unset;cursor:pointer;background:oklch(0.27 0.03 285);color:white;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:700;transform:rotate(3deg);transition:transform .25s" style-hover="transform:rotate(-4deg) scale(1.08)">Winner ★</button>
                   </div>
-                  <sc-if value="{{ c.bImg }}" hint-placeholder-val="{{ false }}">
-                    <img ref="{{ c.bRef }}" alt="Variant B screenshot" onClick="{{ c.zoomB }}" data-cursor="zoom in ⤢" style="cursor:zoom-in;display:block;width:100%;height:auto;border-radius:16px;border:1px solid oklch(0.93 0.01 285)">
-                  </sc-if>
-                  <sc-if value="{{ c.noImg }}" hint-placeholder-val="{{ true }}">
-                  <div style="aspect-ratio:4/3;border-radius:16px;background:repeating-linear-gradient(135deg,{{ c.bg }} 0 10px,{{ c.bgSoft }} 10px 20px);display:flex;align-items:center;justify-content:center">
-                    <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.42 0.03 285);background:white;padding:6px 10px;border-radius:8px">screenshot · variant B</span>
+                  <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:flex-start;justify-content:{{ c.shotJustify }}">
+                    <sc-for list="{{ c.bShots }}" as="s" hint-placeholder-count="1">
+                      <div style="flex:{{ s.flex }};min-width:0;display:flex;flex-direction:column;gap:6px">
+                        <img ref="{{ s.ref }}" alt="Variant screenshot" onClick="{{ s.zoom }}" data-cursor="zoom in ⤢" style="cursor:zoom-in;display:block;width:100%;height:auto;max-height:{{ s.maxH }};object-fit:contain;object-position:top;border-radius:14px;border:1px solid oklch(0.93 0.01 285)">
+                        <sc-if value="{{ s.hasCap }}" hint-placeholder-val="{{ false }}"><span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:oklch(0.48 0.03 285);padding:0 4px">{{ s.cap }}</span></sc-if>
+                      </div>
+                    </sc-for>
                   </div>
-                  </sc-if>
                 </figure>
+              </div>
+
+              <div style="background:white;border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:14px">
+                <div style="align-self:flex-start;background:oklch(0.92 0.06 295);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:700;transform:rotate(-1.5deg)">What changed</div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px">
+                  <sc-for list="{{ c.items }}" as="it" hint-placeholder-count="3">
+                    <div style="background:{{ c.bgSoft }};border-radius:20px;padding:18px 20px;display:flex;flex-direction:column;gap:8px">
+                      <span style="font-family:'JetBrains Mono',monospace;font-size:12px;color:{{ c.deep }}">{{ it.n }}</span>
+                      <span style="font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.25">{{ it.title }}</span>
+                      <span style="font-size:15px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ it.text }}</span>
+                    </div>
+                  </sc-for>
+                </div>
               </div>
 
               <div style="background:oklch(0.27 0.03 285);color:white;border-radius:28px;padding:26px">
@@ -181,12 +200,12 @@ a:hover{color:oklch(0.5 0.14 295)}
                   <span style="font-weight:700;font-size:18px">Results</span>
                   <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.82 0.02 285)">{{ c.meta }}</span>
                 </div>
-                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px">
                   <sc-for list="{{ c.metrics }}" as="m" hint-placeholder-count="4">
-                    <div style="background:oklch(1 0 0 / .07);border-radius:20px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:6px">
-                      <span style="font-size:14px;color:oklch(0.85 0.02 285)">{{ m.label }}</span>
+                    <div style="background:oklch(1 0 0 / .07);border-radius:20px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:8px">
                       <span style="font-size:42px;font-weight:800;letter-spacing:-.04em;line-height:1;color:{{ m.color }};font-variant-numeric:tabular-nums">{{ m.delta }}</span>
-                      <span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:oklch(0.8 0.02 285);font-variant-numeric:tabular-nums">{{ m.range }}</span>
+                      <span style="font-size:15px;font-weight:600;line-height:1.35;color:white">{{ m.label }}</span>
+                      <sc-if value="{{ m.hasNote }}" hint-placeholder-val="{{ false }}"><span style="font-size:13px;line-height:1.45;color:oklch(0.82 0.02 285);text-wrap:pretty">{{ m.note }}</span></sc-if>
                     </div>
                   </sc-for>
                 </div>
@@ -199,15 +218,21 @@ a:hover{color:oklch(0.5 0.14 295)}
   </section>
 
   <section id="about" style="max-width:1160px;margin:0 auto;padding:60px 20px">
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:40px;align-items:center">
-      <div style="position:relative;aspect-ratio:1;max-width:420px;border-radius:50%;background:repeating-linear-gradient(135deg,oklch(0.92 0.06 350) 0 12px,oklch(0.95 0.04 350) 12px 24px);display:flex;align-items:center;justify-content:center">
-        <span style="font-family:'JetBrains Mono',monospace;font-size:13px;background:white;padding:6px 10px;border-radius:8px">portrait photo</span>
-        <span style="position:absolute;bottom:12%;right:-4%;background:oklch(0.92 0.06 95);padding:8px 14px;border-radius:12px;font-weight:700;font-size:15px;transform:rotate(-6deg);border:2px solid white;box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">Hi, I'm Iryna</span>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:56px;align-items:center">
+      <div style="position:relative;max-width:420px;width:100%;justify-self:center;padding:30px 0">
+        <img src="assets/portrait.png" alt="Iryna L." style="display:block;width:100%;aspect-ratio:1;object-fit:cover;object-position:center 30%;border-radius:50%;border:6px solid white;box-shadow:0 20px 50px oklch(0.3 0.05 285 / .14);box-sizing:border-box">
+        <span style="position:absolute;top:8%;left:-2%;background:oklch(0.92 0.06 295);padding:8px 14px;border-radius:12px;font-weight:700;font-size:15px;transform:rotate(-6deg);border:2px solid white;box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">Analytical thinking</span>
+        <span style="position:absolute;top:30%;right:-6%;background:oklch(0.92 0.06 95);padding:8px 14px;border-radius:12px;font-weight:700;font-size:15px;transform:rotate(5deg);border:2px solid white;box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">Creative problem-solving</span>
+        <span style="position:absolute;bottom:22%;left:-6%;background:oklch(0.92 0.06 160);padding:8px 14px;border-radius:12px;font-weight:700;font-size:15px;transform:rotate(3deg);border:2px solid white;box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">User-centered decisions</span>
+        <span style="position:absolute;bottom:4%;right:4%;background:white;padding:8px 14px;border-radius:12px;font-weight:700;font-size:15px;transform:rotate(-4deg);border:2px solid oklch(0.92 0.06 350);box-shadow:0 3px 0 oklch(0.3 0.05 285 / .12)">Attention to detail</span>
       </div>
-      <div>
-        <h2 style="margin:0 0 20px;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">About</h2>
-        <p style="margin:0 0 16px;font-size:19px;line-height:1.55;text-wrap:pretty">[About paragraph] A short intro on background, years of experience and the kind of products you've worked on.</p>
-        <p style="margin:0;font-size:17px;line-height:1.55;color:oklch(0.45 0.03 285);text-wrap:pretty">[Second paragraph] What you enjoy about testing and optimization, and the teams you've worked with.</p>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <h2 style="margin:0 0 4px;font-size:clamp(36px,5vw,56px);letter-spacing:-.035em;font-weight:800">About</h2>
+        <p style="margin:0;font-size:20px;line-height:1.5;text-wrap:pretty">I'm a UX/UI designer with 6 years of experience creating and improving digital products across different industries.</p>
+        <p style="margin:0;font-size:17px;line-height:1.6;color:oklch(0.42 0.03 285);text-wrap:pretty">My background in conversion optimization shapes how I approach design: I look beyond aesthetics to understand user behavior, identify friction points and uncover opportunities for improvement.</p>
+        <p style="margin:0;font-size:17px;line-height:1.6;color:oklch(0.42 0.03 285);text-wrap:pretty">I've worked across the entire design process, from research, data analysis and UX evaluation to wireframing, prototyping and interface design. I enjoy tackling complex challenges, connecting different perspectives and turning insights into practical solutions.</p>
+        <p style="margin:0;font-size:17px;line-height:1.6;color:oklch(0.42 0.03 285);text-wrap:pretty">I believe good design comes from understanding both the people who use a product and the goals behind it.</p>
+        <span style="align-self:flex-start;margin-top:6px;font-family:'Caveat',cursive;font-weight:600;font-size:48px;line-height:1;color:oklch(0.5 0.14 295);transform:rotate(-4deg)">Iryna L.</span>
       </div>
     </div>
   </section>
@@ -251,9 +276,12 @@ a:hover{color:oklch(0.5 0.14 295)}
                 <span style="align-self:flex-start;background:white;padding:4px 11px;border-radius:9px;font-family:'JetBrains Mono',monospace;font-size:13px;transform:rotate(-2deg);box-shadow:0 2px 0 oklch(0.3 0.05 285 / .1)">{{ j.period }}</span>
                 <span style="font-size:clamp(24px,2.8vw,32px);font-weight:800;letter-spacing:-.03em;line-height:1.05">{{ j.company }}</span>
                 <span style="font-size:17px;font-weight:600;color:oklch(0.4 0.03 285)">{{ j.role }}</span>
+                <span style="font-size:14px;color:oklch(0.48 0.03 285)">{{ j.loc }}</span>
               </div>
               <div style="display:flex;flex-direction:column;gap:14px">
-                <p style="margin:0;font-size:16px;line-height:1.55;color:oklch(0.38 0.03 285);text-wrap:pretty">{{ j.desc }}</p>
+                <ul style="margin:0;padding-left:18px;display:flex;flex-direction:column;gap:7px;font-size:15px;line-height:1.5;color:oklch(0.38 0.03 285)">
+                  <sc-for list="{{ j.points }}" as="pt" hint-placeholder-count="4"><li style="text-wrap:pretty">{{ pt }}</li></sc-for>
+                </ul>
                 <span style="display:flex;gap:6px;flex-wrap:wrap">
                   <sc-for list="{{ j.tags }}" as="t" hint-placeholder-count="3">
                     <span style="background:oklch(1 0 0 / .65);padding:4px 11px;border-radius:9px;font-size:13px;font-weight:500">{{ t }}</span>
@@ -324,74 +352,75 @@ a:hover{color:oklch(0.5 0.14 295)}
 <script type="text/x-dc" data-dc-script data-props="{&quot;customCursor&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;confetti&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;},&quot;wobble&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Motion&quot;}}">
 const HUES = [350, 60, 95, 160, 230, 295];
 const CASES = [
-  { title: 'Pricing page CTA', type: 'A/B test', area: 'Pricing', headlineIdx: 0,
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '2 weeks · 18,400 visitors · 95% confidence',
-    metrics: [['Conversion rate', 2.1, 2.6, '%', 1], ['CTR', 4.8, 6.1, '%', 1], ['Time on page', 48, 57, 's', 0], ['AOV', 42, 45, '$', 0]] },
-  { title: 'Checkout trust signals', type: 'A/B test', area: 'Checkout', headlineIdx: 0,
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '3 weeks · 9,200 sessions · 97% confidence',
-    metrics: [['Conversion rate', 54.0, 61.2, '%', 1], ['CTR', 22.0, 24.5, '%', 1], ['Time on page', 95, 88, 's', 0], ['AOV', 63, 66, '$', 0]] },
-  { title: 'Product page hero', type: 'Section redesign', area: 'Product page', headlineIdx: 1,
-    aImg: 'assets/product-page-before.png', bImg: 'assets/product-page-after.png',
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '2 weeks · 31,000 visitors · 99% confidence',
-    metrics: [['Conversion rate', 3.4, 3.9, '%', 1], ['CTR', 11.2, 15.0, '%', 1], ['Time on page', 62, 74, 's', 0], ['AOV', 58, 58, '$', 0]] },
-  { title: 'Demo form step cut', type: 'A/B test', area: 'Lead form', headlineIdx: 0,
-    aImg: 'assets/demo-form-before.png', bImg: 'assets/demo-form-after.png',
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '4 weeks · 6,700 sign-ups · 95% confidence',
-    metrics: [['Conversion rate', 38.0, 47.5, '%', 1], ['CTR', 61.0, 66.0, '%', 1], ['Time on page', 140, 102, 's', 0], ['AOV', 0, 0, '$', 0]] },
-  { title: 'Landing page social proof', type: 'Section redesign', area: 'Landing', headlineIdx: 2,
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '2 weeks · 22,800 visitors · 96% confidence',
-    metrics: [['Conversion rate', 1.8, 2.1, '%', 1], ['CTR', 7.4, 8.2, '%', 1], ['Time on page', 41, 63, 's', 0], ['AOV', 0, 0, '$', 0]] },
-  { title: 'Cart upsell module', type: 'A/B test', area: 'Cart', headlineIdx: 3,
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '3 weeks · 14,100 carts · 98% confidence',
-    metrics: [['Conversion rate', 12.0, 12.4, '%', 1], ['CTR', 3.1, 9.6, '%', 1], ['Time on page', 35, 39, 's', 0], ['AOV', 48, 56, '$', 0]] },
-  { title: 'Hero headline copy', type: 'A/B test', area: 'Landing', headlineIdx: 1,
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '10 days · 40,200 visitors · 95% confidence',
-    metrics: [['Conversion rate', 1.9, 2.2, '%', 1], ['CTR', 6.2, 7.9, '%', 1], ['Time on page', 38, 44, 's', 0], ['AOV', 0, 0, '$', 0]] },
-  { title: 'Free shipping bar', type: 'Section redesign', area: 'Cart', headlineIdx: 3,
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '3 weeks · 11,800 carts · 97% confidence',
-    metrics: [['Conversion rate', 11.5, 12.9, '%', 1], ['CTR', 0, 0, '%', 1], ['Time on page', 33, 36, 's', 0], ['AOV', 44, 51, '$', 0]] },
-  { title: 'Express pay buttons', type: 'A/B test', area: 'Checkout', headlineIdx: 0,
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '2 weeks · 8,300 sessions · 99% confidence',
-    metrics: [['Conversion rate', 52, 58.4, '%', 1], ['CTR', 18, 27, '%', 1], ['Time on page', 92, 71, 's', 0], ['AOV', 61, 62, '$', 0]] },
-  { title: 'Search filters panel', type: 'Section redesign', area: 'Search', headlineIdx: 1,
-    intro: '[Intro] One or two sentences about the product, the page and what was tested.',
-    challenge: '[Challenge] What was wrong: drop-off point, user feedback, or a metric below target.',
-    approach: '[Approach] The hypothesis, what changed in variant B, and why.',
-    meta: '3 weeks · 27,500 searches · 96% confidence',
-    metrics: [['Conversion rate', 4.1, 4.6, '%', 1], ['CTR', 18.0, 23.4, '%', 1], ['Time on page', 72, 64, 's', 0], ['AOV', 0, 0, '$', 0]] }
+  { title: 'Navigation optimization', tags: ['Navigation', '3 A/B tests', 'Recruitment · B2B'],
+    intro: 'A series of CRO experiments for a B2B workforce platform serving two audiences: job seekers and businesses seeking talent. The goal was to make key conversion paths easier to reach for both groups.',
+    challenge: 'Key conversion paths weren’t equally accessible across devices. Contact Us was a plain link on desktop and hidden in the mobile hamburger menu, while Job Search had no dedicated CTA on desktop. On top of that, too many destinations competed for attention.',
+    lead: 'I analyzed the navigation structure and designed three iterations to make key destinations easier to find and simplify navigation on every device. The team ran each one as a sequential A/B test.',
+    items: [['CTA prominence', 'Turned the Contact Us link into a CTA button on desktop.'],
+      ['Simpler hierarchy', 'Cut secondary links and prioritized service and lead pages.'],
+      ['Placement by device', 'Highlighted Job Search on desktop and moved Contact Us out of the mobile menu.']],
+    shots: { d: { a: [['assets/cases/c1-a-d.png']], b: [['assets/cases/c1-b-d.png']] },
+             m: { a: [['assets/cases/c1-a-m1.png', 'Default'], ['assets/cases/c1-a-m2.png', 'Menu open']], b: [['assets/cases/c1-b-m1.png', 'Default'], ['assets/cases/c1-b-m2.png', 'Menu open']] } },
+    meta: '3 sequential A/B tests',
+    results: [['+197%', 'Mobile Contact Us clicks'], ['+117%', 'Desktop Job Search clicks'], ['+20%', 'Services page visits'], ['+12%', 'Contact page visits']] },
+  { title: 'Contact page optimization', tags: ['Contact page', '2 A/B tests', 'Recruitment · B2B'],
+    intro: 'Two sequential A/B tests exploring how the contact page could better guide job seekers and employers toward the right conversion path.',
+    challenge: 'The page served users with very different goals but didn’t point either group to a clear next step. The first redesign raised traffic to key pages, yet client leads stayed flat: users also needed to know what to expect and feel sure they’d picked the right path.',
+    lead: 'I worked on two iterations, moving from visual prioritization of the main paths to an intent-driven experience where visitors first say why they’re getting in touch.',
+    items: [['Prioritize primary actions', 'Smaller hero, candidate and client CTAs first, secondary actions lower.'],
+      ['Let users choose intent', 'Tabs for employer, job seeker and other, each with a relevant next step.'],
+      ['Clear expectations', 'Each tab shows what happens next, so users feel sure of their choice.']],
+    shots: { d: { a: [['assets/cases/c2-a-d.png']], b: [['assets/cases/c2-b-d.png']] }, m: { a: [['assets/cases/c2-a-m.png']], b: [['assets/cases/c2-b-m.png']] } },
+    meta: '2 sequential A/B tests',
+    results: [['+30%', 'Total lead conversions'], ['+134%', 'Mobile conversions'], ['+110%', 'Users reaching Jobs'], ['+37%', 'Workforce Solutions CR']] },
+  { title: 'Paid landing page hero', tags: ['Hero', 'A/B test', 'Education · Paid traffic'],
+    intro: 'A landing page redesign testing whether clearer value communication and a stronger first impression could improve lead generation from paid traffic.',
+    challenge: 'Paid traffic arrived on the Evaluation Kit page, but the first screen didn’t explain why the guide was worth downloading. The form asked for details before building motivation, and trust signals were easy to miss, so conversion was unusually low for paid traffic.',
+    lead: 'I redesigned the first fold around a clear value proposition, stronger motivation and a more focused form, so visitors understand the benefit before they’re asked to commit.',
+    items: [['Sharper headline', 'Simplified the headline and added three core value propositions.'],
+      ['Motivation & trust', 'Added salary-range messaging and made testimonials more visible.'],
+      ['Lighter form', 'Clearer hierarchy, less perceived effort, support info by the CTA.']],
+    shots: { d: { a: [['assets/cases/c3-a-d.png']], b: [['assets/cases/c3-b-d.png']] } },
+    meta: 'A/B test',
+    results: [['+14%', 'Lead conversions'], ['+$37,030', 'Revenue during the test']] },
+  { title: 'Product page optimization', tags: ['Product page', 'Redesign', 'E-commerce'],
+    intro: 'A product page redesign focused on content hierarchy, product discovery and the purchase experience across desktop and mobile.',
+    challenge: 'Pages lacked a consistent structure. Long descriptions pushed Add to Cart below the fold and the price was barely visible inside the button. On mobile, users scrolled through several screens to buy, past hidden gallery controls and unreadable badges.',
+    lead: 'I redesigned the product page template around a clearer content hierarchy and one consistent structure for the whole catalog, adapted for small screens.',
+    items: [['Content hierarchy', 'Scannable sections, prominent price, Add to Cart within reach.'],
+      ['Product discovery', 'Visible gallery navigation and thumbnails, no unnecessary selectors.'],
+      ['Mobile-first details', 'Readable text-and-icon benefits instead of image badges.']],
+    shots: { d: { a: [['assets/cases/c4-a-d.png']], b: [['assets/cases/c4-b-d.png']] }, m: { a: [['assets/cases/c4-a-m.png']], b: [['assets/cases/c4-b-m.png']] } },
+    meta: 'Redesign · desktop & mobile',
+    results: [['+64%', 'Purchases'], ['+37%', 'Add to Cart'], ['+30%', 'Average order value'], ['+105%', 'Revenue per user']] },
+  { title: 'Mega menu product cards', tags: ['Mega menu', 'A/B test', 'E-commerce · Hearing aids'],
+    intro: 'An experiment for an e-commerce brand selling hearing aids, testing whether products that are easier to evaluate right in the mega menu lead to more purchases.',
+    challenge: 'The mega menu showed products as a simple list with few visual cues. Shoppers couldn’t quickly compare options or tell which product matched their needs, and the path to purchase wasn’t obvious.',
+    lead: 'I turned the product list into clickable cards with visual and informational cues, making products easier to explore and the purchase action more prominent.',
+    items: [['Benefit tags', 'Most Affordable, Most Popular and Most Powerful labels.'],
+      ['Visible pricing', 'Prices shown directly in the menu.'],
+      ['Shop Now CTAs', 'A clear next step on every card.']],
+    shots: { d: { a: [['assets/cases/c5-a-d.png']], b: [['assets/cases/c5-b-d.png']] }, m: { a: [['assets/cases/c5-a-m.png']], b: [['assets/cases/c5-b-m.png']] } },
+    meta: 'A/B test',
+    results: [['+3.24%', 'Transactions'], ['+5.35%', 'Revenue per user'], ['+0.62%', 'Average order value'], ['+$77,611', 'Realized revenue']] },
+  { title: 'Multistep demo form', tags: ['Lead form', 'A/B test', 'B2B SaaS · Paid search'],
+    intro: 'An A/B test exploring whether a lower-friction form could encourage cold prospects from paid search to engage with Anrok and book a demo.',
+    challenge: 'Cold prospects knew little about Anrok, yet the page opened with a long form asking for personal details. Analytics showed most users who started the form finished it, but relatively few started it at all.',
+    lead: 'Based on analytics and heuristic analysis, I simplified the first step to reduce perceived commitment and reinforced trust right at the point of conversion.',
+    items: [['Email-only first step', 'Replaced the long form with a single field.'],
+      ['Multistep flow', 'Remaining questions split into two short steps.'],
+      ['Trust by the form', 'Customer logos moved next to the decision point.']],
+    shots: { d: { a: [['assets/cases/c6-a-d.png']], b: [['assets/cases/c6-b-d1.png', 'Step 1'], ['assets/cases/c6-b-d2.png', 'Step 2'], ['assets/cases/c6-b-d3.png', 'Step 3']] },
+             m: { a: [['assets/cases/c6-a-m.png']], b: [['assets/cases/c6-b-m1.png', 'Step 1'], ['assets/cases/c6-b-m2.png', 'Step 2'], ['assets/cases/c6-b-m3.png', 'Step 3']] } },
+    meta: 'A/B test',
+    results: [['+20%', 'Form starts'], ['+65%', 'Demo bookings'], ['+138%', 'Demo CTA clicks'], ['+38%', 'Time on page']] }
 ];
+const animNum = (s, k) => { const m = s.match(/^([+\u2212-]?)(\$?)([\d,.]+)(%?)$/); if (!m) return s; const raw = m[3].replace(/,/g, ''); const d = (raw.split('.')[1] || '').length; return m[1] + m[2] + (parseFloat(raw) * k).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }) + m[4]; };
 const STEPS = [
-  ['Audit', '[Short description] Analytics, heatmaps and recordings to find where users struggle.'],
-  ['Hypothesis', '[Short description] One clear change, one expected outcome, one primary metric.'],
-  ['Design & test', '[Short description] Build the variant, split traffic, run to significance.'],
-  ['Learn & ship', '[Short description] Roll out the winner and document what it taught us.'],
+  ['Discover & Analyze', 'I explore the product, understand business objectives, analyze user behavior, and identify pain points and opportunities.'],
+  ['Define & Strategize', 'I translate findings into clear problem statements, prioritize opportunities, and develop a direction for solving the identified challenges.'],
+  ['Design & Iterate', 'I explore concepts, structure user flows, create wireframes, and develop polished interfaces, refining solutions through feedback and iteration.'],
+  ['Validate & Improve', 'I evaluate solutions through usability feedback, data, or experimentation, using insights to refine the experience and find new opportunities.'],
 ];
 const TOOLS = ['UX Research', 'CRO', 'Analytics', 'UX Audit', 'UI Design', 'A/B Testing', 'Prototyping', 'Wireframing', 'Design Systems', 'E-commerce', 'Figma', 'FigJam', 'Google Analytics', 'Webflow', 'AI'];
 
@@ -399,7 +428,7 @@ const PH = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3
 const fmt = (v, unit, d) => unit === '$' ? '$' + v.toFixed(d) : v.toFixed(d) + unit;
 
 class Component extends DCLogic {
-  state = { heat: {}, revealed: false,  hand: [0, 5, 10], dealing: false, deals: 0, picks: {}, flips: {}, xpSeen: {}, xpYears: 0, xpClients: 0, open: {}, p: {}, cols: 4, hover: null, zoom: null };
+  state = { heat: {}, revealed: false,  hand: [0, 5, 10], dealing: false, deals: 0, picks: {}, flips: {}, xpSeen: {}, xpYears: 0, xpClients: 0, open: {}, p: {}, dev: {}, cols: 4, hover: null, zoom: null };
   rafs = {};
   xpRef = React.createRef(); xpLineRef = React.createRef();
   confettiRef = React.createRef();
@@ -532,37 +561,27 @@ class Component extends DCLogic {
     const SPANS = { 4: [[1,1],[1,1],[2,2],[1,2],[1,2],[2,1]], 2: [[1,1],[1,1],[2,2],[1,1],[1,1],[2,1]], 1: [[1,1],[1,1],[1,2],[1,1],[1,1],[1,1]] }[cols];
     const cases = CASES.map((c, i) => {
       const h = HUES[i % HUES.length], isOpen = !!open[i], prog = isOpen ? (p[i] ?? 1) : 1;
-      const metrics = c.metrics.filter(m => m[1] > 0).map(([label, a, b, unit, d]) => {
-        const delta = (b - a) / a * 100;
-        const lowerBetter = label === 'Time on page' && /Demo form|Checkout/.test(c.title);
-        const good = lowerBetter ? delta < 0 : delta >= 0;
-        return {
-          label, delta: (delta >= 0 ? '+' : '−') + Math.abs(delta * prog).toFixed(1) + '%',
-          range: `${fmt(a, unit, d)} → ${fmt(a + (b - a) * prog, unit, d)}`,
-          color: good ? `oklch(0.86 0.1 ${h})` : 'oklch(0.85 0.03 285)',
-        };
-      });
-      const [hl, a, b] = c.metrics[c.headlineIdx];
-      const hd = (b - a) / a * 100;
+      const hasMobile = !!c.shots.m, dev = hasMobile && this.state.dev[i] === 'm' ? 'm' : 'd', set = c.shots[dev];
+      const mk = v => set[v].map(([src, cap], k) => ({ ref: this.srcRef(src), cap: cap || '', hasCap: !!cap, flex: dev === 'm' ? (set[v].length > 1 ? '1 1 140px' : '0 1 260px') : '1 1 100%', maxH: 'none', zoom: () => this.setState({ zoom: { i, dev, v, k } }) }));
+      const ink = 'oklch(0.27 0.03 285)', on = d => dev === d;
       return {
-        ...c, n: String(i + 1).padStart(2, '0'), isOpen, metrics,
-        aImg: c.aImg || null, bImg: c.bImg || null, noImg: !c.aImg, isClosed: !isOpen,
-        peekImg: c.bImg || PH, showPeek: this.state.hover === i && !isOpen && cols > 1, z: this.state.hover === i ? 3 : 1,
-        aRef: this.srcRef(c.aImg), bRef: this.srcRef(c.bImg),
+        ...c, n: String(i + 1).padStart(2, '0'), isOpen, hasMobile,
+        tagList: c.tags.map((label, k) => ({ label, bg: k ? 'oklch(1 0 0 / .55)' : 'white', w: k ? 500 : 700, rot: ['-2deg', '1.5deg', '-1deg'][k % 3] })),
+        hasFriction: !!c.friction, friction: c.friction || [],
+        items: c.items.map(([title, x, y], k) => { const bl = Array.isArray(x) ? x : (y || []); return { n: String(k + 1).padStart(2, '0'), title, text: typeof x === 'string' ? x : '', hasText: typeof x === 'string', bullets: bl, hasBullets: bl.length > 0 }; }),
+        metrics: c.results.map(([delta, label, note]) => ({ label, note: note || '', hasNote: !!note, delta: animNum(delta, prog), color: `oklch(0.86 0.1 ${h})` })),
+        aShots: mk('a'), bShots: mk('b'), shotJustify: dev === 'm' ? 'center' : 'flex-start',
+        dBg: on('d') ? ink : 'transparent', dFg: on('d') ? 'white' : ink, mBg: on('m') ? ink : 'transparent', mFg: on('m') ? 'white' : ink,
+        setD: () => this.setState(s => ({ dev: { ...s.dev, [i]: 'd' } })), setM: () => this.setState(s => ({ dev: { ...s.dev, [i]: 'm' } })),
+        peekImg: c.shots.d.b[0][0], showPeek: this.state.hover === i && !isOpen && cols > 1, z: this.state.hover === i ? 3 : 1,
         cursorLabel: isOpen ? 'close case' : 'open case →',
-        zoomA: () => this.setState({ zoom: { i, v: 'a' } }), zoomB: () => this.setState({ zoom: { i, v: 'b' } }),
         enter: e => { this._peekX = this.peekPos(e); this.setState({ hover: i }); }, leave: () => this.setState({ hover: null }),
         peekX: (this._peekX || 0) + 'px',
         peekMove: e => { const el = e.currentTarget.querySelector('[data-peek]'); if (el) el.style.transform = `translateX(${this.peekPos(e)}px)`; },
-        gc: 'auto', gr: 'auto',
-        showPreview: false,
-        tileHoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 1.2 : -1.2}deg) scale(1.02)` : 'translateY(-4px)',
-        bg: `oklch(0.92 0.06 ${h})`, bgSoft: `oklch(0.96 0.03 ${h})`, deep: `oklch(0.5 0.13 ${h})`,
+        bg: `oklch(0.92 0.06 ${h})`, bgSoft: `oklch(0.965 0.025 ${h})`, deep: `oklch(0.5 0.13 ${h})`,
         hoverTf: isOpen ? 'none' : wobble ? `rotate(${i % 2 ? 0.8 : -0.8}deg) scale(1.01)` : 'translateY(-3px)',
         chevTf: isOpen ? 'rotate(45deg)' : 'none',
-        headline: (hd >= 0 ? '+' : '−') + Math.abs(hd).toFixed(0) + '%',
-        headlineLabel: hl.toLowerCase(),
-        aRate: fmt(c.metrics[0][1], '%', 1) + ' CR', bRate: fmt(c.metrics[0][2], '%', 1),
+        headline: c.results[0][0], headlineLabel: c.results[0][1],
         toggle: () => this.toggle(i),
         celebrate: e => { e.stopPropagation(); this.confetti(e.clientX, e.clientY); },
       };
@@ -573,9 +592,11 @@ class Component extends DCLogic {
     }));
     const tools = TOOLS.map((name, i) => ({ name, bg: `oklch(0.92 0.06 ${HUES[i % 6]})`, rot: wobble ? `${[-3, 2, -1, 3, -2, 1][i % 6]}deg` : '0deg' }));
     const z = this.state.zoom, zc = z && CASES[z.i];
+    const zList = zc ? zc.shots[z.dev][z.v] : null, zShot = zList ? zList[Math.min(z.k, zList.length - 1)] : null;
     const dark = 'oklch(0.27 0.03 285)';
     const zoomVals = {
-      hasZoom: !!z, zoomRef: this.srcRef(zc ? (z.v === 'a' ? zc.aImg : zc.bImg) : null), zoomSrc: zc ? (z.v === 'a' ? zc.aImg : zc.bImg) : '', zoomAlt: z ? (z.v === 'a' ? 'Variant A' : 'Variant B') : '',
+      hasZoom: !!z, zoomRef: this.srcRef(zShot ? zShot[0] : null), zoomAlt: z ? (z.v === 'a' ? 'Control' : 'Variant') : '',
+      zoomW: z && z.dev === 'm' ? 'min(100%, 440px)' : '100%', zoomCap: z ? (z.dev === 'm' ? 'Mobile' : 'Desktop') + (zShot && zShot[1] ? ' · ' + zShot[1] : '') : '',
       closeZoom: () => this.setState({ zoom: null }), stop: e => e.stopPropagation(),
       zoomToA: e => { e.stopPropagation(); this.setState({ zoom: { ...z, v: 'a' } }); },
       zoomToB: e => { e.stopPropagation(); this.setState({ zoom: { ...z, v: 'b' } }); },
@@ -583,9 +604,27 @@ class Component extends DCLogic {
       zoomBBg: z && z.v === 'b' ? dark : 'transparent', zoomBFg: z && z.v === 'b' ? 'white' : dark,
     };
     const JOBS = [
-      { company: '[Company name]', role: 'Senior Product Designer', period: '2023 — now', hue: 295, tags: ['A/B testing', 'Design system', 'Growth'] },
-      { company: '[Company name]', role: 'Product Designer', period: '2021 — 2023', hue: 350, tags: ['E-commerce', 'Checkout', 'Research'] },
-      { company: '[Company name]', role: 'UX/UI Designer', period: '2019 — 2021', hue: 160, tags: ['Landing pages', 'Prototyping', 'Web'] },
+      { company: 'ThetaMark Partners', role: 'UX/UI Designer', period: 'Mar 2026 — now', loc: 'Consulting agency', hue: 295, tags: ['UX strategy', 'Information architecture', 'Prototyping'], points: [
+        'Contributed to UX strategy and website experience initiatives, aligning user needs, business objectives and digital experience requirements.',
+        'Worked across client website projects, supporting information architecture, user flows, wireframes, prototypes and visual design.',
+        'Applied UX research, competitive analysis and website performance insights to identify usability issues and turn findings into actionable design recommendations.',
+        'Collaborated with multidisciplinary teams across UX, research, business intelligence, creative strategy and marketing to develop cohesive digital experiences.',
+        'Supported website optimization and creative initiatives across landing pages, advertising and other marketing touchpoints.'] },
+      { company: 'Conversion Advocates', role: 'UX/UI Designer', period: 'Jan 2022 — Mar 2026', loc: 'Canada · Remote', hue: 350, tags: ['CRO', 'A/B testing', 'E-commerce', 'Design system'], points: [
+        'Designed and optimized user experiences for e-commerce websites, focusing on key conversion points across product pages, cart and checkout flows.',
+        'Conducted UX audits, heuristic evaluations and competitive analyses to identify usability issues, customer friction points and conversion opportunities.',
+        'Analyzed website performance and user behavior to translate data insights into actionable design hypotheses and optimization recommendations.',
+        'Designed and iterated on experiences across the marketing funnel, including landing pages, product pages, promotional assets, email layouts and ad creatives.',
+        'Collaborated with strategists, developers and cross-functional teams to align design solutions with business objectives and support A/B testing initiatives.',
+        'Contributed to the development and maintenance of a scalable design system used across multiple client projects.',
+        'Designed internal CRO tools and automation solutions to streamline workflows and improve A/B test reporting.'] },
+      { company: 'Freelance', role: 'UX/UI Designer', period: 'Apr 2021 — Jan 2022', loc: 'Web & mobile products', hue: 160, tags: ['Web & mobile', 'User research', 'Branding'], points: [
+        'Designed UX/UI solutions for web and mobile products, translating business requirements into intuitive, user-centered experiences.',
+        'Worked directly with clients to understand business objectives, product requirements, target audiences and project scope.',
+        'Conducted competitive research and user analysis to identify design opportunities and inform UX decisions.',
+        'Developed wireframes, user flows and high-fidelity interface designs throughout the design process.',
+        'Collaborated with developers to ensure design feasibility, consistency and accurate implementation.',
+        'Created supporting digital assets, including landing pages, visual branding elements and marketing materials.'] },
     ];
     const jobs = JOBS.map((j, i) => { const on = !!this.state.xpSeen[i]; return { ...j, desc: '[Description] Two or three sentences about the product, your responsibilities and one result you are proud of.', bg: `oklch(0.95 0.035 ${j.hue})`, ring: `oklch(0.8 0.11 ${j.hue})`, op: on ? 1 : 0, tf: on ? 'none' : 'translateY(40px) rotate(1deg)', dot: on ? 1 : 0 }; });
     const PAIRS = [['Coffee', 'Matcha'], ['Early bird', 'Night owl'], ['Mountains', 'Sea'], ['Dark mode', 'Light mode'], ['Cats', 'Dogs']];
